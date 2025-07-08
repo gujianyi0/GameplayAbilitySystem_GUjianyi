@@ -23,7 +23,8 @@ public class VisualStudioTools : ModuleRules
             // Required by tasks in the compliance pipeline.
             if (Target.Version.MajorVersion >= 5)
             {
-                UnsafeTypeCastWarningLevel = WarningLevel.Error;
+                //UnsafeTypeCastWarningLevel = WarningLevel.Error; 原代码
+                CppCompileWarningSettings.UnsafeTypeCastWarningLevel = WarningLevel.Error;//更改后
             }
         }
         else

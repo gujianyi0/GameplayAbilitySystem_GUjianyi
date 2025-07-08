@@ -14,9 +14,17 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7a09dcac-7603-4ae1-a87d-87c81f681176" name="更改" comment="">
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.Aura/.idea/.name" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Aura/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Aura/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Aura.uproject" beforeDir="false" afterPath="$PROJECT_DIR$/Aura.uproject" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Plugins/VisualStudioTools/Source/VisualStudioTools/Private/VisualStudioToolsCommandlet.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Plugins/VisualStudioTools/Source/VisualStudioTools/Private/VisualStudioToolsCommandlet.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Plugins/VisualStudioTools/Source/VisualStudioTools/VisualStudioTools.Build.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Plugins/VisualStudioTools/Source/VisualStudioTools/VisualStudioTools.Build.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/Aura/Aura.Build.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Aura/Aura.Build.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Aura/Private/Character/AuraCharacterBase.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Aura/Private/Character/AuraCharacterBase.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Aura/Private/Character/AuraEnemy.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Aura/Private/Character/AuraEnemy.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Aura/Private/Player/AuraPlayerState.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Aura/Private/Player/AuraPlayerState.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Aura/Public/Character/AuraCharacterBase.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Aura/Public/Character/AuraCharacterBase.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Aura/Public/Player/AuraPlayerState.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Aura/Public/Player/AuraPlayerState.h" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -43,12 +51,12 @@
   }
 }</component>
   <component name="HighlightingSettingsPerFile">
-    <setting file="mock://F:/Chuxuezhe/UE/Project/C++/GameplayAbilitySystemCourse/Aura'/Aura.uproject" root0="FORCE_HIGHLIGHTING" />
+    <setting file="mock://F:/Chuxuezhe/UE/Project/C++/GameplayAbilitySystemCourse/Aura/Plugins/VisualStudioTools/Source/VisualStudioTools/Private/VisualStudioToolsCommandlet.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://F:/Chuxuezhe/UE/Project/C++/GameplayAbilitySystemCourse/Aura/Plugins/VisualStudioTools/Source/VisualStudioTools/VisualStudioTools.Build.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Source/Aura/Private/AbilitySystem/AuraAbilitySystemComponent.cpp" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Source/Aura/Private/AbilitySystem/AuraAttributeSet.cpp" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Source/Aura/Public/AbilitySystem/AuraAbilitySystemComponent.h" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Source/Aura/Public/AbilitySystem/AuraAttributeSet.h" root0="FORCE_HIGHLIGHTING" />
-    <setting file="mock://F:/Chuxuezhe/UE/Project/C++/GameplayAbilitySystemCourse/Aura'/Source/Aura/Public/Player/AuraPlayerState.h" root0="SKIP_HIGHLIGHTING" />
   </component>
   <component name="MetaFilesCheckinStateConfiguration" checkMetaFiles="true" />
   <component name="ProblemsViewState">
@@ -80,6 +88,12 @@
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
+  <component name="QodanaReportsService">
+    <option name="descriptions">
+      <ReportDescription localRun="true" path="C:\Users\c2115\AppData\Local\Temp\qodana_output\qodana.sarif.json" reportGuid="8095c886-fa34-4618-8f12-bfacb139cd4e" reportId="Aura/qodana/2025-07-08" />
+      <ReportDescription localRun="true" path="C:\Users\c2115\AppData\Local\Temp\qodana_output1\qodana.sarif.json" reportGuid="2952c83b-33a0-4690-955f-1e9ba55bb9d8" reportId="Aura/qodana/2025-07-08" />
+    </option>
+  </component>
   <component name="RunManager" selected="C/C++ 项目.Aura">
     <configuration name="Aura" type="CppProject" factoryName="C++ Project">
       <configuration_1 setup="1">
@@ -235,7 +249,8 @@
       <workItem from="1751944263929" duration="434000" />
       <workItem from="1751944786442" duration="666000" />
       <workItem from="1751945499323" duration="693000" />
-      <workItem from="1751970041341" duration="1560000" />
+      <workItem from="1751970041341" duration="1912000" />
+      <workItem from="1751975361387" duration="11120000" />
     </task>
     <task id="LOCAL-00001" summary="后期处理高光">
       <option name="closed" value="true" />
@@ -285,7 +300,15 @@
       <option name="project" value="LOCAL" />
       <updated>1751970525140</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="能力系统组件和属性设置">
+      <option name="closed" value="true" />
+      <created>1751971903704</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1751971903704</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -310,6 +333,7 @@
     <MESSAGE value="玩家状态" />
     <MESSAGE value="Merge remote-tracking branch 'origin/main'" />
     <MESSAGE value="截止玩家状态基于将版本更新至5.6以修复根据Mend.io, Microsoft.Extensions.Caching.Memory6.0.1包含漏洞" />
+    <MESSAGE value="能力系统组件和属性设置" />
     <option name="LAST_COMMIT_MESSAGE" value="" />
   </component>
   <component name="XDebuggerManager">

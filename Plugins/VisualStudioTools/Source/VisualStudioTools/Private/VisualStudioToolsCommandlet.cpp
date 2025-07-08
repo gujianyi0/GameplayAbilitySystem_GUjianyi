@@ -115,7 +115,8 @@ struct FAssetIndex
 			ClassEntry.Blueprints.Add(BlueprintIndex);
 
 			// Retrieve the properties from the parent class that changed in the Blueprint class, by comparing their CDOs.
-			UObject* GeneratedClassDefault = BlueprintGeneratedClass->ClassDefaultObject;
+			//UObject* GeneratedClassDefault = BlueprintGeneratedClass->ClassDefaultObject;原代码
+			UObject* GeneratedClassDefault = BlueprintGeneratedClass->GetDefaultObject();//修改后
 			UObject* SuperClassDefault = Parent->GetDefaultObject(false);
 			TArray<FProperty*> ChangedProperties = GetChangedPropertiesList(Parent, (uint8*)GeneratedClassDefault, (uint8*)SuperClassDefault);
 
@@ -254,7 +255,8 @@ static void SerializeProperties(TSharedRef<JsonWriter>& Json, FClassEntry& Entry
 
 				Json->WriteValue(TEXT("blueprint"), BlueprintEntry);
 
-				UObject* GeneratedClassDefault = Blueprints[BlueprintEntry]->ClassDefaultObject;
+				//UObject* GeneratedClassDefault = Blueprints[BlueprintEntry]->ClassDefaultObject;//原代码
+				UObject* GeneratedClassDefault = Blueprints[BlueprintEntry]->GetDefaultObject();//修改后
 				const uint8* PropData = PropEntry.Property->ContainerPtrToValuePtr<uint8>(GeneratedClassDefault);
 
 				if (ShouldSerializePropertyValue(PropEntry.Property))
