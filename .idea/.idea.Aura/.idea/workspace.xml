@@ -15,6 +15,8 @@
   <component name="ChangeListManager">
     <list default="true" id="7a09dcac-7603-4ae1-a87d-87c81f681176" name="更改" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Aura/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Aura/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Aura.uproject" beforeDir="false" afterPath="$PROJECT_DIR$/Aura.uproject" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Aura/Aura.Build.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Aura/Aura.Build.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -40,6 +42,14 @@
     &quot;accountId&quot;: &quot;78107502-7261-4d88-b032-ee20da68882d&quot;
   }
 }</component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="mock://F:/Chuxuezhe/UE/Project/C++/GameplayAbilitySystemCourse/Aura'/Aura.uproject" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Source/Aura/Private/AbilitySystem/AuraAbilitySystemComponent.cpp" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Source/Aura/Private/AbilitySystem/AuraAttributeSet.cpp" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Source/Aura/Public/AbilitySystem/AuraAbilitySystemComponent.h" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Source/Aura/Public/AbilitySystem/AuraAttributeSet.h" root0="FORCE_HIGHLIGHTING" />
+    <setting file="mock://F:/Chuxuezhe/UE/Project/C++/GameplayAbilitySystemCourse/Aura'/Source/Aura/Public/Player/AuraPlayerState.h" root0="SKIP_HIGHLIGHTING" />
+  </component>
   <component name="MetaFilesCheckinStateConfiguration" checkMetaFiles="true" />
   <component name="ProblemsViewState">
     <option name="selectedTabId" value="CurrentFile" />
@@ -225,7 +235,7 @@
       <workItem from="1751944263929" duration="434000" />
       <workItem from="1751944786442" duration="666000" />
       <workItem from="1751945499323" duration="693000" />
-      <workItem from="1751970041341" duration="644000" />
+      <workItem from="1751970041341" duration="1560000" />
     </task>
     <task id="LOCAL-00001" summary="后期处理高光">
       <option name="closed" value="true" />
@@ -300,7 +310,7 @@
     <MESSAGE value="玩家状态" />
     <MESSAGE value="Merge remote-tracking branch 'origin/main'" />
     <MESSAGE value="截止玩家状态基于将版本更新至5.6以修复根据Mend.io, Microsoft.Extensions.Caching.Memory6.0.1包含漏洞" />
-    <option name="LAST_COMMIT_MESSAGE" value="截止玩家状态基于将版本更新至5.6以修复根据Mend.io, Microsoft.Extensions.Caching.Memory6.0.1包含漏洞" />
+    <option name="LAST_COMMIT_MESSAGE" value="" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
