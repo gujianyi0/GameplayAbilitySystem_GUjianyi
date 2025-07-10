@@ -15,16 +15,9 @@
   <component name="ChangeListManager">
     <list default="true" id="7a09dcac-7603-4ae1-a87d-87c81f681176" name="更改" comment="">
       <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.Aura/.idea/.name" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Aura/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Aura/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Plugins/VisualStudioTools/Source/VisualStudioTools/Private/VisualStudioToolsCommandlet.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Plugins/VisualStudioTools/Source/VisualStudioTools/Private/VisualStudioToolsCommandlet.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Plugins/VisualStudioTools/Source/VisualStudioTools/VisualStudioTools.Build.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Plugins/VisualStudioTools/Source/VisualStudioTools/VisualStudioTools.Build.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/Aura/Aura.Build.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Aura/Aura.Build.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/Aura/Private/Character/AuraCharacterBase.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Aura/Private/Character/AuraCharacterBase.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/Aura/Private/Character/AuraEnemy.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Aura/Private/Character/AuraEnemy.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/Aura/Private/Player/AuraPlayerState.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Aura/Private/Player/AuraPlayerState.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/Aura/Public/Character/AuraCharacterBase.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Aura/Public/Character/AuraCharacterBase.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/Aura/Public/Player/AuraPlayerState.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Aura/Public/Player/AuraPlayerState.h" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -250,7 +243,7 @@
       <workItem from="1751944786442" duration="666000" />
       <workItem from="1751945499323" duration="693000" />
       <workItem from="1751970041341" duration="1912000" />
-      <workItem from="1751975361387" duration="11120000" />
+      <workItem from="1751975361387" duration="16488000" />
     </task>
     <task id="LOCAL-00001" summary="后期处理高光">
       <option name="closed" value="true" />
@@ -308,7 +301,15 @@
       <option name="project" value="LOCAL" />
       <updated>1751971903704</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="构建技能系统组件和属性集">
+      <option name="closed" value="true" />
+      <created>1752000153466</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1752000153466</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -334,7 +335,8 @@
     <MESSAGE value="Merge remote-tracking branch 'origin/main'" />
     <MESSAGE value="截止玩家状态基于将版本更新至5.6以修复根据Mend.io, Microsoft.Extensions.Caching.Memory6.0.1包含漏洞" />
     <MESSAGE value="能力系统组件和属性设置" />
-    <option name="LAST_COMMIT_MESSAGE" value="" />
+    <MESSAGE value="构建技能系统组件和属性集" />
+    <option name="LAST_COMMIT_MESSAGE" value="构建技能系统组件和属性集" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

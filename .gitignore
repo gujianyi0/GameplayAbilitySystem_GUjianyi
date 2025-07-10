@@ -5,6 +5,7 @@ Saved
 Build
 
 .idea
+.idea/workspace.xml
 .vscode
 .vs
 *.VC.db
