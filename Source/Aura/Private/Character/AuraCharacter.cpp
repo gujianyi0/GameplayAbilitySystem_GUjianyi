@@ -42,6 +42,12 @@ void AAuraCharacter::InitAbilityActorInfo()
 {
 	// 获取玩家状态对象，并进行非空检查
 	AAuraPlayerState* AuraPlayerState = GetPlayerState<AAuraPlayerState>();
+	if (!AuraPlayerState || !AuraPlayerState->GetAbilitySystemComponent())
+	{
+		UE_LOG(LogTemp, Error, TEXT("AbilitySystemComponent is nullptr!"));
+		return;
+	}
+	//if至return之间：检查AuraPlayerState 或 AbilitySystemComponent可能在 InitAbilityActorInfo() 被调用时还没有被正确初始化（即为空指针）
 	check(AuraPlayerState);
 	// 初始化能力系统组件的拥有者信息
 	AuraPlayerState->GetAbilitySystemComponent()->InitAbilityActorInfo(AuraPlayerState, this);
