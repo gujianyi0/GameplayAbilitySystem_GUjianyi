@@ -80,7 +80,7 @@ void AAuraPlayerController::CursorTrace()
 void AAuraPlayerController::BeginPlay()
 {
 	Super::BeginPlay();
-	check(AuraContext)//断言 如果为false 直接崩溃
+	check(AuraContext);//断言 如果为false 直接崩溃
 
 	
 	UEnhancedInputLocalPlayerSubsystem* Subsystem = ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(GetLocalPlayer());
