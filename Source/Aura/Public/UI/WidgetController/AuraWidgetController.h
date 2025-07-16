@@ -7,6 +7,37 @@
 
 class UAttributeSet;
 class UAbilitySystemComponent;
+
+USTRUCT(BlueprintType)
+struct FWidgetControllerParams
+{
+	GENERATED_BODY()
+
+	// 默认构造函数
+	FWidgetControllerParams (){}
+	// 带参数的构造函数，用于初始化结构体中的成员变量
+	FWidgetControllerParams(APlayerController* PC, APlayerState* PS, UAbilitySystemComponent* ASC, UAttributeSet* AS)
+	: PlayerController(PC), PlayerState(PS), AbilitySystemComponent(ASC), AttributeSet(AS)
+	{
+		// 初始化列表中将传入的指针赋值给对应的成员变量
+	}
+
+	// 指向玩家控制器的智能指针，允许在编辑器和蓝图中读写
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	TObjectPtr<APlayerController> PlayerController = nullptr;
+
+	// 指向玩家状态的智能指针，用于存储玩家相关状态数据
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	TObjectPtr<APlayerState> PlayerState = nullptr;
+
+	// 指向能力系统的组件，负责处理角色技能、动作等逻辑
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	TObjectPtr<UAbilitySystemComponent> AbilitySystemComponent = nullptr;
+
+	// 指向属性集的智能指针，用于管理角色属性（如生命值、魔法值等）
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	TObjectPtr<UAttributeSet> AttributeSet = nullptr;
+};
 /**
  * 
  */
@@ -14,6 +45,10 @@ UCLASS()
 class AURA_API UAuraWidgetController : public UObject
 {
 	GENERATED_BODY()
+
+public:
+	UFUNCTION(BlueprintCallable)
+	void SetWidgetControllerParams(const FWidgetControllerParams& WCParams);
 protected:
 
 	UPROPERTY(BlueprintReadOnly, Category="WidgetController")
