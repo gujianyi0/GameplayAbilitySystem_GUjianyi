@@ -26,7 +26,9 @@ void AAuraPlayerController::CursorTrace()
 	if (!CursorHit.bBlockingHit) return;
 
 	LastActor = ThisActor;
-	ThisActor = Cast<IEnemyInterface>(CursorHit.GetActor());
+	ThisActor = TScriptInterface<IEnemyInterface>(CursorHit.GetActor());
+	//Cast<IEnemyInterface>(Actor) 返回的是一个 IEnemyInterface* 指针。
+	//但 TScriptInterface<IEnemyInterface> 不能直接接受裸指针赋值。
 
 	/*
 	* 光标的线条跟踪。有几种情况：

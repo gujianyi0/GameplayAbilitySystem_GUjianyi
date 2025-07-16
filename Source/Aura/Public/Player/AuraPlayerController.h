@@ -35,8 +35,11 @@ private:
 	void Move(const FInputActionValue& InputActionValue);
 
 	void CursorTrace();
-	TObjectPtr<IEnemyInterface> LastActor;
-	TObjectPtr<IEnemyInterface> ThisActor;
+	TScriptInterface<IEnemyInterface> LastActor;
+	TScriptInterface<IEnemyInterface> ThisActor;
+	//将 TObjectPtr<IEnemyInterface> 替换为 TScriptInterface<IEnemyInterface>，因为：
+	//IEnemyInterface 是一个接口（interface），不是 UObject 的派生类。
+	//对于接口类型的引用，Unreal 推荐使用 TScriptInterface<YourInterfaceType>。
 };
 
 
