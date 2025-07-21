@@ -3,9 +3,13 @@
 #pragma once
 
 #include "CoreMinimal.h"
+//#include "ActiveGameplayEffectHandle.h 相关头文件已在"#include "GameplayEffectTypes.h"被包含
 #include "GameFramework/Actor.h"
+#include "GameplayEffectTypes.h"
 #include "AuraEffectActor.generated.h"
 
+
+class UAbilitySystemComponent;
 class UGameplayEffect;
 class USphereComponent;
 
@@ -69,4 +73,5 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Applied Effects")
 	EEffectRemovalPolicy InfiniteEffectRemovalPolicy = EEffectRemovalPolicy::RemoveOnEndOverlap;
 	
+	TMap<FActiveGameplayEffectHandle, UAbilitySystemComponent*> ActiveEffectHandles;
 };
