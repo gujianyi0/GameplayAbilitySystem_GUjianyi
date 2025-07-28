@@ -13,6 +13,9 @@ void UAuraAbilitySystemComponent::EffectApplied(UAbilitySystemComponent* Ability
 {
 	FGameplayTagContainer TagContainer;
 	EffectSpec.GetAllAssetTags(TagContainer);
+
+	EffectAssetTags.Broadcast(TagContainer);
+	
 	for (const FGameplayTag& Tag : TagContainer)
 	{
 		const FString Msg=FString::Printf(TEXT("GE Tag: %s"), *Tag.ToString());
