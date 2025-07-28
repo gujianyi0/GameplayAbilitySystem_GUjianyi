@@ -3,6 +3,7 @@
 
 #include "Character/AuraCharacter.h"
 #include "AbilitySystemComponent.h"
+#include "AbilitySystem/AuraAbilitySystemComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "Player/AuraPlayerController.h"
 #include "Player/AuraPlayerState.h"
@@ -51,6 +52,7 @@ void AAuraCharacter::InitAbilityActorInfo()
 	check(AuraPlayerState);
 	// 初始化能力系统组件的拥有者信息
 	AuraPlayerState->GetAbilitySystemComponent()->InitAbilityActorInfo(AuraPlayerState, this);
+	Cast<UAuraAbilitySystemComponent>(AuraPlayerState->GetAbilitySystemComponent())->AbilityActorInfoSet();
 	// 缓存能力系统组件指针
 	AbilitySystemComponent = AuraPlayerState->GetAbilitySystemComponent();
 	// 缓存属性集指针
