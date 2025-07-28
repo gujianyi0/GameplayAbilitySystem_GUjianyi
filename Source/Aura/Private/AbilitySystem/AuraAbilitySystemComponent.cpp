@@ -11,10 +11,11 @@ void UAuraAbilitySystemComponent::AbilityActorInfoSet()
 void UAuraAbilitySystemComponent::EffectApplied(UAbilitySystemComponent* AbilitySystemComponent,
 	const FGameplayEffectSpec& EffectSpec, FActiveGameplayEffectHandle ActiveEffectHandle)
 {
-	GEngine->AddOnScreenDebugMessage(
-		-1,
-		15.f,
-		FColor::Blue,
-		FString::Printf(TEXT("Applied: %s"), *EffectSpec.Def->GetFName().ToString())
-	);
+	FGameplayTagContainer TagContainer;
+	EffectSpec.GetAllAssetTags(TagContainer);
+	for (const FGameplayTag& Tag : TagContainer)
+	{
+		const FString Msg=FString::Printf(TEXT("GE Tag: %s"), *Tag.ToString());
+		GEngine->AddOnScreenDebugMessage(-1, 8.f, FColor::Blue, Msg);
+	}
 }
