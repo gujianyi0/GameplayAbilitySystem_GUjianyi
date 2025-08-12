@@ -13,4 +13,3 @@ void FAuraGameplayTags::InitializeNativeGameplayTags()
 	FString("Reduces damage taken, improves Block Chance"));
 	
 }
-Singleton
