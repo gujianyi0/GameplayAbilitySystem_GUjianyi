@@ -20,6 +20,8 @@ public:
 	}
 	static void InitializeNativeGameplayTags();
 
+	FGameplayTag Attributes_Secondary_Armor;
+
 protected:
 
 private:
