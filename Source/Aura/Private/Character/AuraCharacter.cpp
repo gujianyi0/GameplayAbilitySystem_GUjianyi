@@ -27,8 +27,11 @@ void AAuraCharacter::PossessedBy(AController* NewController)
 {
 	Super::PossessedBy(NewController);
 
-	// 为服务器初始化拥有能力角色的信息
+	//初始化ASC的OwnerActor和AvatarActor
 	InitAbilityActorInfo();
+
+	//初始化角色技能
+	AddCharacterAbilities();
 }
 
 void AAuraCharacter::OnRep_PlayerState()
