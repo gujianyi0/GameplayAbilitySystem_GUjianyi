@@ -4,8 +4,10 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/PlayerController.h"
+#include "GameplayTagContainer.h"
 #include "AuraPlayerController.generated.h"
 
+class UAuraInputConfig;
 class UInputMappingContext;
 class UInputAction;
 struct FInputActionValue;
@@ -40,6 +42,13 @@ private:
 	//将 TObjectPtr<IEnemyInterface> 替换为 TScriptInterface<IEnemyInterface>，因为：
 	//IEnemyInterface 是一个接口（interface），不是 UObject 的派生类。
 	//对于接口类型的引用，Unreal 推荐使用 TScriptInterface<YourInterfaceType>。
+
+	void AbilityInputTagPressed(FGameplayTag InputTag);
+	void AbilityInputTagReleased(FGameplayTag InputTag);
+	void AbilityInputTagHeld(FGameplayTag InputTag);
+	
+	UPROPERTY(EditDefaultsOnly, Category = "Input")
+	TObjectPtr<UAuraInputConfig> InputConfig;
 };
 
 
