@@ -41,6 +41,7 @@ private:
 	void CursorTrace();
 	TScriptInterface<IEnemyInterface> LastActor;
 	TScriptInterface<IEnemyInterface> ThisActor;
+	FHitResult CursorHit;
 	//将 TObjectPtr<IEnemyInterface> 替换为 TScriptInterface<IEnemyInterface>，因为：
 	//IEnemyInterface 是一个接口（interface），不是 UObject 的派生类。
 	//对于接口类型的引用，Unreal 推荐使用 TScriptInterface<YourInterfaceType>。
