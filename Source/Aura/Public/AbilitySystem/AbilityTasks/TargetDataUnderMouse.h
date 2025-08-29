@@ -28,4 +28,7 @@ private:
 	virtual void Activate() override;
 	//客户端向服务器端提交数据
 	void SendMouseCursorData();
+
+	//当数据提交到服务器端后的委托回调
+	void OnTargetDataReplicatedCallback(const FGameplayAbilityTargetDataHandle& DataHandle, FGameplayTag ActivationTag);
 };
