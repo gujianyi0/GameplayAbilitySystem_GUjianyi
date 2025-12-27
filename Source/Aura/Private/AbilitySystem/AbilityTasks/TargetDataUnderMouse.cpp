@@ -43,7 +43,7 @@ void UTargetDataUnderMouse::Activate()
 void UTargetDataUnderMouse::SendMouseCursorData()
 {
 	//创建一个预测窗口，该窗口允许客户端在不确定服务器响应的情况下，对游戏状态进行预测性更新。
-	FScopedPredictionWindow ScopedPrediction(AbilitySystemComponent.Get(), true);
+	FScopedPredictionWindow ScopedPrediction(AbilitySystemComponent.Get());
 	
 	//获取鼠标拾取结果
 	APlayerController* PC = Ability->GetCurrentActorInfo()->PlayerController.Get();
