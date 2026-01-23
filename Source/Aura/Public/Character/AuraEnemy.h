@@ -28,6 +28,7 @@ public:
 
 	/** Combat Interface */
 	virtual int32 GetPlayerLevel() override;
+	virtual void Die() override;
 	/** end Combat Interface */
 
 	UPROPERTY(BlueprintAssignable)
@@ -44,6 +45,9 @@ public:
 	UPROPERTY(BlueprintReadOnly, Category = "Combat")
 	float BaseWalkSpeed = 250.f;
 	
+	UPROPERTY(EditAnywhere,BlueprintReadOnly, Category = "Combat")
+	float LifeSpan = 5.f;
+	//设置死亡后的存在时间
 	
 protected:
 	virtual void BeginPlay() override;
