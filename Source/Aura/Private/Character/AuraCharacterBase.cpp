@@ -64,6 +64,9 @@ void AAuraCharacterBase::MulticastHandleDeath_Implementation()
 
 	//关闭角色碰撞体碰撞通道，避免其对武器和角色模拟物理效果产生影响
 	GetCapsuleComponent()->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+	
+	//设置角色溶解
+	Dissolve();
 }
 
 FVector AAuraCharacterBase::GetCombatSocketLocation()
@@ -100,6 +103,27 @@ void AAuraCharacterBase::AddCharacterAbilities()
 	if (!HasAuthority()) return;//查询是否拥有网络权限，应用技能需要添加给服务器
 
 	AuraASC->AddCharacterAbilities(StartupAbilities);
+}
+
+void AAuraCharacterBase::Dissolve()
+{
+
+	//设置角色溶解
+	if(IsValid(DissolveMaterialInstance))
+	{
+		UMaterialInstanceDynamic* DynamicMatInst = UMaterialInstanceDynamic::Create(DissolveMaterialInstance, this);
+		GetMesh()->SetMaterial(0, DynamicMatInst);
+		StartDissolveTimeline(DynamicMatInst);
+	}
+
+	//设置武器溶解
+	if(IsValid(WeaponDissolveMaterialInstance))
+	{
+		UMaterialInstanceDynamic* DynamicMatInst = UMaterialInstanceDynamic::Create(WeaponDissolveMaterialInstance, this);
+		Weapon->SetMaterial(0, DynamicMatInst);
+		StartWeaponDissolveTimeline(DynamicMatInst);
+	}
+	
 }
 
 
