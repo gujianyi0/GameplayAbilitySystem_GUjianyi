@@ -184,13 +184,14 @@ void AAuraPlayerController::SetupInputComponent()
 
 void AAuraPlayerController::ShowDamageNumber_Implementation(float DamageAmount, ACharacter* TargetCharacter)
 {
+	//确保传入的目标没被销毁并且设置了组件类
 	if (IsValid(TargetCharacter) && DamageTextComponentClass)
 	{
 		UDamageTextComponent* DamageText = NewObject<UDamageTextComponent>(TargetCharacter,DamageTextComponentClass);
-		DamageText->RegisterComponent();
-		DamageText->AttachToComponent(TargetCharacter->GetRootComponent(), FAttachmentTransformRules::KeepWorldTransform);
-		DamageText->DetachFromComponent(FDetachmentTransformRules::KeepRelativeTransform);
-		DamageText->SetDamageText(DamageAmount);
+		DamageText->RegisterComponent();//动态创建的组件需要调用注册
+		DamageText->AttachToComponent(TargetCharacter->GetRootComponent(), FAttachmentTransformRules::KeepWorldTransform);//先附加到角色身上，使用角色位置
+		DamageText->DetachFromComponent(FDetachmentTransformRules::KeepRelativeTransform);//然后从角色身上分离，保证在一个位置播放完成动画
+		DamageText->SetDamageText(DamageAmount);//设置显示的伤害数字
 		
 	}
 }
