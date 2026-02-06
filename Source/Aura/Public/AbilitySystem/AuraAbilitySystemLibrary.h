@@ -5,7 +5,7 @@
 #include "CoreMinimal.h"
 #include "Kismet/BlueprintFunctionLibrary.h"
 #include "Data/CharacterClassInfo.h"
-#include "AuraAbilitySystemLibiary.generated.h"
+#include "AuraAbilitySystemLibrary.generated.h"
 
 class UAbilitySystemComponent;
 class UAttributeMenuWidgetController;
@@ -32,4 +32,8 @@ public:
 	
 	UFUNCTION(BlueprintCallable, Category = "Aura Ability System Library|Character Class Defaults")
 	static void GiveStartupAbilities(const UObject* WorldContextObject, UAbilitySystemComponent* ASC); 
+	
+	//获取角色配置数据
+	UFUNCTION(BlueprintCallable, Category="AuraAbilitySystemLibrary|CharacterClassDefaults")
+	static UCharacterClassInfo* GetCharacterClassInfo(const UObject* WorldContextObject);
 };
