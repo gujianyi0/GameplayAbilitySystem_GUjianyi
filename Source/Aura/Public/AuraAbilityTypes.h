@@ -21,6 +21,21 @@ public:
 	{
 		return FGameplayEffectContext::StaticStruct();
 	}
+	
+	
+	/** 创建一个副本，用于后续网络复制或者后续修改  */
+	virtual FAuraGameplayEffectContext* Duplicate() const
+	{
+		FAuraGameplayEffectContext* NewContext = new FAuraGameplayEffectContext();
+		*NewContext = *this;//WithCopy 设置为true，就可以通过赋值操作进行拷贝
+		if (GetHitResult())
+		{
+			// 深拷贝 hit result
+			NewContext->AddHitResult(*GetHitResult(), true);
+		}
+		return NewContext;
+	}
+
 
 	/** 用于序列化类的参数 */
 	virtual bool NetSerialize(FArchive& Ar, class UPackageMap* Map, bool& bOutSuccess);
@@ -34,3 +49,13 @@ protected:
 	bool bIsCriticalHit = false;  //暴击
 	
 };
+
+template<>
+struct TStructOpsTypeTraits<FAuraGameplayEffectContext> : public TStructOpsTypeTraitsBase2<FAuraGameplayEffectContext>
+	{
+		enum
+		{
+			WithNetSerializer = true,
+			WithCopy = true // Necessary so that TSharedPtr<FHitResult> Data is copied around
+		};
+	};
