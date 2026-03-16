@@ -64,7 +64,7 @@ void UAuraProjectileSpell::SpawnProjectile(const FVector& ProjectileTargetLocati
 		
 		for (auto& Pair : DamageTypes)
 		{
-			const float ScaledDamage = Pair.Value.GetValueAtLevel(GetAbilityLevel());
+			const float ScaledDamage = Pair.Value.GetValueAtLevel(GetAbilityLevel());//根据等级获取技能伤害
 			UAbilitySystemBlueprintLibrary::AssignTagSetByCallerMagnitude(SpecHandle, Pair.Key, ScaledDamage);
 		}
 		Projectile->DamageEffectSpecHandle = SpecHandle;
