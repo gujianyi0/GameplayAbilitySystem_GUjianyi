@@ -24,9 +24,9 @@ public:
 	
 	
 	/** 创建一个副本，用于后续网络复制或者后续修改  */
-	virtual FAuraGameplayEffectContext* Duplicate() const
+	virtual FGameplayEffectContext* Duplicate() const
 	{
-		FAuraGameplayEffectContext* NewContext = new FAuraGameplayEffectContext();
+		FGameplayEffectContext* NewContext = new FGameplayEffectContext();
 		*NewContext = *this;//WithCopy 设置为true，就可以通过赋值操作进行拷贝
 		if (GetHitResult())
 		{
