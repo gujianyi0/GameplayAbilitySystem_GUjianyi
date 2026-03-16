@@ -43,7 +43,10 @@ public:
 	FGameplayTag InputTag_3;
 	FGameplayTag InputTag_4;
 	
-	FGameplayTag Damage;
+	FGameplayTag Damage;//伤害 标签
+	FGameplayTag Damage_Fire;//火属性伤害 标签
+
+	TArray<FGameplayTag> DamageTypes;
 	
 	FGameplayTag Effects_HitReact;
 	
