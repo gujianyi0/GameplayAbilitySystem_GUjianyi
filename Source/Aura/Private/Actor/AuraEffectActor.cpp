@@ -9,6 +9,7 @@
 
 AAuraEffectActor::AAuraEffectActor()
 {
+	// 设置当前对象是否每帧调用Tick()
 	PrimaryActorTick.bCanEverTick = false;
 
 	SetRootComponent(CreateDefaultSubobject<USceneComponent>("SceneRoot"));
@@ -21,25 +22,38 @@ void AAuraEffectActor::BeginPlay()
 
 void AAuraEffectActor::ApplyEffectToTarget(AActor* TargetActor, TSubclassOf<UGameplayEffect> GameplayEffectClass)
 {
+	if (TargetActor->ActorHasTag(FName("Enemy")) && !bApplyEffectsToEnemies) return;
+	//获取ASC
 	UAbilitySystemComponent* TargetASC = UAbilitySystemBlueprintLibrary::GetAbilitySystemComponent(TargetActor);
-	
 	if (TargetASC == nullptr) return;
 
 	check(GameplayEffectClass);
+	//创建Effect的句柄 包含了实例化Effect所需数据
 	FGameplayEffectContextHandle EffectContextHandle =TargetASC->MakeEffectContext();
+	//设置创建Effect的对象
 	EffectContextHandle.AddSourceObject(this);
+	//Effect的实例化后的句柄，可以通过此来寻找调用
 	const FGameplayEffectSpecHandle EffectSpecHandle = TargetASC->MakeOutgoingSpec(GameplayEffectClass, ActorLevel, EffectContextHandle);
+	//从句柄中获取到实例的地址，并被应用
 	const FActiveGameplayEffectHandle ActiveEffectHandle = TargetASC->ApplyGameplayEffectSpecToSelf(*EffectSpecHandle.Data.Get());
 	
+	//从句柄中获取到定义的对象，并判断设置的
 	const bool bIsInfinite = EffectSpecHandle.Data.Get()->Def.Get()->DurationPolicy == EGameplayEffectDurationType::Infinite;
+	//在是无限时间效果和需要在结束时清除掉时，将效果句柄添加到map
 	if (bIsInfinite && InfiniteEffectRemovalPolicy == EEffectRemovalPolicy::RemoveOnEndOverlap)
 	{
 		ActiveEffectHandles.Add(ActiveEffectHandle, TargetASC);
+	}
+	if (!bIsInfinite)//如果设置了应用时删除，除了Infinite的都会自动删除
+	{
+		Destroy();
 	}
 }
 
 void AAuraEffectActor::OnOverlap(AActor* TargetActor)
 {
+	//如果触发角色类型为敌人，并且此拾取物设置无法被敌人拾取
+	if (TargetActor->ActorHasTag(FName("Enemy")) && !bApplyEffectsToEnemies) return;
 	if (InstantEffectApplicationPolicy == EEffectApplicationPolicy::ApplyOnOverlap)
 	{
 		ApplyEffectToTarget(TargetActor,InstantGameplayEffectClass);
@@ -58,6 +72,10 @@ void AAuraEffectActor::OnOverlap(AActor* TargetActor)
 
 void AAuraEffectActor::OnEndOverlap(AActor* TargetActor)
 {
+	//如果触发角色类型为敌人，并且此拾取物设置无法被敌人拾取
+	if (TargetActor->ActorHasTag(FName("Enemy")) && !bApplyEffectsToEnemies) return;
+	
+	//添加效果
 	if (InstantEffectApplicationPolicy == EEffectApplicationPolicy::ApplyOnEndOverlap)
 	{
 		ApplyEffectToTarget(TargetActor, InstantGameplayEffectClass);
@@ -70,20 +88,28 @@ void AAuraEffectActor::OnEndOverlap(AActor* TargetActor)
 	{
 		ApplyEffectToTarget(TargetActor, InfiniteGameplayEffectClass);
 	}
+	
+	//删除效果
 	if (InfiniteEffectRemovalPolicy == EEffectRemovalPolicy::RemoveOnEndOverlap)
 	{
 		UAbilitySystemComponent* TargetASC = UAbilitySystemBlueprintLibrary::GetAbilitySystemComponent(TargetActor);
 		if (!IsValid(TargetASC)) return;
 
+		//创建存储需要移除的效果句柄存储Key，用于遍历完成后移除效果
 		TArray<FActiveGameplayEffectHandle>HandlesToRemove;
+		//循环map内存的数据
 		for (TTuple<FActiveGameplayEffectHandle, UAbilitySystemComponent*> HandlePair : ActiveEffectHandles)
 		{
+			//判断是否ASC相同
 			if (TargetASC == HandlePair.Value)
 			{
+				//通过句柄将效果移除，注意，有可能有多层效果，不能将其它层的效果也移除掉，所以只移除一层
 				TargetASC->RemoveActiveGameplayEffect(HandlePair.Key,1);
+				//添加到移除列表
 				HandlesToRemove.Add(HandlePair.Key);
 			}
 		}
+		//遍历完成后，在Map中将移除效果的KeyValue删除
 		for (FActiveGameplayEffectHandle& Handle : HandlesToRemove)
 		{
 			ActiveEffectHandles.FindAndRemoveChecked(Handle);
