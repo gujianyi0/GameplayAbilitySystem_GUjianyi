@@ -31,7 +31,7 @@ public:
 		float Level, UAbilitySystemComponent* ASC);
 	
 	UFUNCTION(BlueprintCallable, Category = "Aura Ability System Library|Character Class Defaults")
-	static void GiveStartupAbilities(const UObject* WorldContextObject, UAbilitySystemComponent* ASC); 
+	static void GiveStartupAbilities(const UObject* WorldContextObject, UAbilitySystemComponent* ASC, ECharacterClass CharacterClass); 
 	
 	//获取角色配置数据
 	UFUNCTION(BlueprintCallable, Category="AuraAbilitySystemLibrary|CharacterClassDefaults")

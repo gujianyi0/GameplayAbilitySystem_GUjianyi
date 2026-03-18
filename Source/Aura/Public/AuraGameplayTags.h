@@ -54,6 +54,8 @@ public:
 	FGameplayTag Damage_Arcane;//魔法伤害 标签
 	FGameplayTag Damage_Physical;//物理伤害 标签
 	
+	FGameplayTag Abilities_Attack;
+	
 	TMap<FGameplayTag, FGameplayTag> DamageTypesToResistances;//属性伤害标签对应属性抵抗标签
 	
 	FGameplayTag Effects_HitReact;
