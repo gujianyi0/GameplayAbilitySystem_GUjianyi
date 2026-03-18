@@ -25,6 +25,7 @@ class AURA_API ICombatInterface
 public:
 	virtual int32 GetPlayerLevel();
 	
+	//获取技能释放位置，通过在蓝图中设置获取WeaponTipSocketName的位置
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
 	FVector GetCombatSocketLocation();
 	
@@ -35,4 +36,10 @@ public:
 	UAnimMontage* GetHitReactMontage();
 	
 	virtual void Die() = 0;
+	
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
+	bool IsDead() const;//获取当前角色是否死亡
+
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
+	AActor* GetAvatar();//获取当前角色
 };

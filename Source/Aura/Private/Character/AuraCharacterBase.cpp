@@ -67,12 +67,25 @@ void AAuraCharacterBase::MulticastHandleDeath_Implementation()
 	
 	//设置角色溶解
 	Dissolve();
+	
+	//设置死亡状态
+	bDead = true;
 }
 
 FVector AAuraCharacterBase::GetCombatSocketLocation_Implementation()
 {
 	check(Weapon);
 	return Weapon->GetSocketLocation(WeaponTipSocketName);
+}
+
+bool AAuraCharacterBase::IsDead_Implementation() const
+{
+	return bDead;
+}
+
+AActor* AAuraCharacterBase::GetAvatar_Implementation()
+{
+	return this;
 }
 
 void AAuraCharacterBase::InitAbilityActorInfo()
