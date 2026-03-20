@@ -56,4 +56,8 @@ public:
 	static void GetLivePlayersWithinRadius(const UObject* WorldContextObject, TArray<AActor*>& OutOverlappingActors,
 		const TArray<AActor*>& ActorsToIgnore, float Radius, const FVector& SphereOrigin);
 	
+	//获取双方是否为敌对势力
+	UFUNCTION(BlueprintPure, Category = "AuraAbilitySystemLibrary|GameplayMechanics")
+	static bool IsNotFriend(AActor* FirstActor, AActor* SecondActor);
+	
 };
