@@ -7,6 +7,9 @@
 #include "GameplayTagContainer.h"
 #include "CombatInterface.generated.h"
 
+class UNiagaraSystem;
+class UAnimMontage;
+
 //蒙太奇动画和标签以及骨骼位置的映射，用于攻击技能获取和设置攻击范围
 USTRUCT(BlueprintType)
 struct FTaggedMontage
@@ -20,6 +23,10 @@ struct FTaggedMontage
 	//对应的标签
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
 	FGameplayTag MontageTag;
+	
+	//攻击时的触发音效
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
+	USoundBase* ImpactSound = nullptr;
 };
 
 // This class does not need to be modified.
@@ -29,7 +36,6 @@ class UCombatInterface : public UInterface
 	GENERATED_BODY()
 };
 
-class UAnimMontage;
 /**
  * 
  */
@@ -61,4 +67,8 @@ public:
 	
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
 	TArray<FTaggedMontage> GetAttackMontages();
+	
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
+	UNiagaraSystem* GetBloodEffect();//获取角色的受伤特效
+	
 };
