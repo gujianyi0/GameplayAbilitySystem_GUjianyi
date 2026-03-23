@@ -24,6 +24,9 @@ struct FTaggedMontage
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
 	FGameplayTag MontageTag;
 	
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
+	FGameplayTag SocketTag;
+	
 	//攻击时的触发音效
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
 	USoundBase* ImpactSound = nullptr;
@@ -70,5 +73,8 @@ public:
 	
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
 	UNiagaraSystem* GetBloodEffect();//获取角色的受伤特效
+	
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
+	FTaggedMontage GetTaggedMontageByTag(const FGameplayTag& MontageTag);//通过标签获取对应的结构体
 	
 };

@@ -26,7 +26,7 @@ void UAuraProjectileSpell::SpawnProjectile(const FVector& ProjectileTargetLocati
 	if (!bIsServer) return;
 	const FVector SocketLocation = ICombatInterface::Execute_GetCombatSocketLocation(
 			GetAvatarActorFromActorInfo(),
-			FAuraGameplayTags::Get().Montage_Attack_Weapon);
+			FAuraGameplayTags::Get().CombatSocket_Weapon);
 	FRotator Rotation = (ProjectileTargetLocation - SocketLocation).Rotation();//将方向转为旋转
 	//Rotation.Pitch = 0.f; 设置Pitch为0，转向的朝向将平行于地面
 		
