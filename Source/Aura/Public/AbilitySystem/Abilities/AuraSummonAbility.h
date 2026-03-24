@@ -18,6 +18,10 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	TArray<FVector> GetSpawnLocations();
+	
+	UFUNCTION(BlueprintPure, Category="Summoning")
+	TSubclassOf<APawn> GetRandomMinionClass();//获取随机的召唤物类
+	
 
 	UPROPERTY(EditDefaultsOnly, Category = "Summoning")
 	int32 NumMinions = 5;// 召唤的数量
