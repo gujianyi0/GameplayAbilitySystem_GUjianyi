@@ -55,6 +55,8 @@ public:
 	FGameplayTag Damage_Physical;//物理伤害 标签
 	
 	FGameplayTag Abilities_Attack;
+	FGameplayTag Abilities_Summon;//召唤技能激活标签
+
 	
 	FGameplayTag CombatSocket_Weapon;
 	FGameplayTag CombatSocket_RightHand;
