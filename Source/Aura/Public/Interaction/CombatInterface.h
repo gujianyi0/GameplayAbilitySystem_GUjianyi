@@ -80,4 +80,7 @@ public:
 	
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
 	int32 GetMinionCount();//获取角色拥有的仆从数量
+	
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
+	void IncremenetMinionCount(int32 Amount);//设置角色仆从的增长数量，负数为负增长
 };
