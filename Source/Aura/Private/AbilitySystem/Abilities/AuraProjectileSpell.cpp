@@ -19,7 +19,8 @@ void UAuraProjectileSpell::ActivateAbility(const FGameplayAbilitySpecHandle Hand
 
 }
 
-void UAuraProjectileSpell::SpawnProjectile(const FVector& ProjectileTargetLocation, const FGameplayTag& SocketTag)
+void UAuraProjectileSpell::SpawnProjectile(const FVector& ProjectileTargetLocation, 
+	const FGameplayTag& SocketTag, bool bOverridePitch, float PitchOverride)
 {
 	
 	const bool bIsServer = GetAvatarActorFromActorInfo()->HasAuthority();
@@ -28,6 +29,11 @@ void UAuraProjectileSpell::SpawnProjectile(const FVector& ProjectileTargetLocati
 		GetAvatarActorFromActorInfo(),
 		SocketTag);
 	FRotator Rotation = (ProjectileTargetLocation - SocketLocation).Rotation();//将方向转为旋转
+	if (bOverridePitch)
+	{
+		Rotation.Pitch = PitchOverride;
+	}
+	
 	//Rotation.Pitch = 0.f; 设置Pitch为0，转向的朝向将平行于地面
 		
 		FTransform SpawnTransform;
