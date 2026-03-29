@@ -191,6 +191,11 @@ void FAuraGameplayTags::InitializeNativeGameplayTags()
 		FString("召唤技能标签")
 		);
 
+	GameplayTags.Abilities_Fire_FireBolt = UGameplayTagsManager::Get().AddNativeGameplayTag(
+	FName("Abilities.Fire.FireBolt"),
+	FString("火球术技能标签")
+	);
+
 	
 	/*
 	 * Combat Sockets

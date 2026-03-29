@@ -56,6 +56,7 @@ public:
 	
 	FGameplayTag Abilities_Attack;
 	FGameplayTag Abilities_Summon;//召唤技能激活标签
+	FGameplayTag Abilities_Fire_FireBolt;
 
 	
 	FGameplayTag CombatSocket_Weapon;
