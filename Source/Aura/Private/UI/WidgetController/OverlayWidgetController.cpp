@@ -2,10 +2,9 @@
 
 
 #include "UI/WidgetController/OverlayWidgetController.h"
-
 #include "AbilitySystem/AuraAbilitySystemComponent.h"
-
 #include "AbilitySystem/AuraAttributeSet.h"
+#include "AbilitySystem/Data/AbilityInfo.h"
 
 void UOverlayWidgetController::BroadcastInitialValues()
 {
@@ -94,4 +93,18 @@ void UOverlayWidgetController::OnInitializeStartupAbilities(UAuraAbilitySystemCo
 {
 	if (!AuraAbilitySystemComponent->bStartupAbilitiesGiven) return;
 	
+	//创建单播委托
+	FForEachAbility BroadcastDelegate;
+	//委托绑定回调匿名函数，委托广播时将会触发函数内部逻辑
+	BroadcastDelegate.BindLambda([this, AuraAbilitySystemComponent](const FGameplayAbilitySpec& AbilitySpec)
+	{
+	//通过静态函数获取到技能实例的技能标签，并通过标签获取到技能数据
+		FAuraAbilityInfo Info = AbilityInfo->FindAbilityInfoForTag(AuraAbilitySystemComponent->GetAbilityTagFromSpec(AbilitySpec));
+		//获取到技能的输入标签
+		Info.InputTag = AuraAbilitySystemComponent->GetInputTagFromSpec(AbilitySpec);
+		//广播技能数据
+		AbilityInfoDelegate.Broadcast(Info);
+	});
+	//遍历技能并触发委托回调
+	AuraAbilitySystemComponent->ForEachAbility(BroadcastDelegate);
 }
