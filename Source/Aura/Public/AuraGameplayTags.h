@@ -1,4 +1,4 @@
-// Copyright Gujianyi
+ // Copyright Gujianyi
 
 #pragma once
 
@@ -57,7 +57,7 @@ public:
 	FGameplayTag Abilities_Attack;
 	FGameplayTag Abilities_Summon;//召唤技能激活标签
 	FGameplayTag Abilities_Fire_FireBolt;
-
+	FGameplayTag Cooldown_Fire_FireBolt;//火球术冷却标签
 	
 	FGameplayTag CombatSocket_Weapon;
 	FGameplayTag CombatSocket_RightHand;
