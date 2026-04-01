@@ -10,6 +10,7 @@
 
 class UAbilitySystemComponent;
 class UAttributeSet;
+class ULevelUpInfo;
 
 DECLARE_MULTICAST_DELEGATE_OneParam(FOnPlayerStatChanged, int32 /*NewValue*/);
 /**
@@ -24,6 +25,10 @@ public:
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 	virtual UAbilitySystemComponent* GetAbilitySystemComponent() const override;//覆盖虚函数获取asc
 	UAttributeSet* GetAttributeSet() const { return AttributeSet; }//获取as
+	
+	UPROPERTY(EditDefaultsOnly)
+	TObjectPtr<ULevelUpInfo> LevelUpInfo;//设置升级相关数据
+
 	FOnPlayerStatChanged OnXPChangedDelegate;//经验值变动委托
 	FOnPlayerStatChanged OnLevelChangedDelegate;//等级变动委托
 

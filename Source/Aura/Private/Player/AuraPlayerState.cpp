@@ -15,7 +15,7 @@ AAuraPlayerState::AAuraPlayerState()
 
 	AttributeSet = CreateDefaultSubobject<UAuraAttributeSet>("AttributeSet");
 	
-	SetNetUpdateFrequency(100.f);//设置服务端将此对象每秒更新的次数
+	SetNetUpdateFrequency(100.f);//每秒和服务器更新频率，使用GAS后可以设置的高一些
 }
 
 void AAuraPlayerState::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const

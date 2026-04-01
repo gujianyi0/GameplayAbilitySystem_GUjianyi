@@ -62,6 +62,10 @@ public:
 
 	UPROPERTY(BlueprintAssignable, Category="GAS|Messages")
 	FAbilityInfoSignature AbilityInfoDelegate;
+	
+	UPROPERTY(BlueprintAssignable, Category="GAS|XP")
+	FOnAttributeChangedSignature OnXPPercentChangedDelegate;//经验条百分比变动回调
+
 
 protected:
 
@@ -76,6 +80,8 @@ protected:
 	T* GetDataTableRowByTag(UDataTable* DataTable, const FGameplayTag& Tag);
 	
 	void OnInitializeStartupAbilities(UAuraAbilitySystemComponent* AuraAbilitySystemComponent);//技能初始化应用后的回调
+	
+	void OnXPChanged(int32 NewXP) const; //经验变动后的回调
 };
 
 template <typename T>
