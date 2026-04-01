@@ -53,6 +53,8 @@ public:
 	FGameplayTag Damage_Lightning;//雷属性伤害 标签
 	FGameplayTag Damage_Arcane;//魔法伤害 标签
 	FGameplayTag Damage_Physical;//物理伤害 标签
+	FGameplayTag Attributes_Meta_IncomingXP;//元属性经验 标签
+
 	
 	FGameplayTag Abilities_Attack;
 	FGameplayTag Abilities_Summon;//召唤技能激活标签

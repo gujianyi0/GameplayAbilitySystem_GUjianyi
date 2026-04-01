@@ -165,6 +165,15 @@ void FAuraGameplayTags::InitializeNativeGameplayTags()
 		);
 
 	/*
+	 * Meta Attributes
+	 */
+
+	GameplayTags.Attributes_Meta_IncomingXP = UGameplayTagsManager::Get().AddNativeGameplayTag(
+		FName("Attributes.Meta.IncomingXP"),
+		FString("经验元属性标签")
+		);
+
+	/*
 	 * 将属性和抗性标签对应
 	 */
 	GameplayTags.DamageTypesToResistances.Add(GameplayTags.Damage_Arcane, GameplayTags.Attributes_Resistance_Arcane);
@@ -196,10 +205,10 @@ void FAuraGameplayTags::InitializeNativeGameplayTags()
 	FString("火球术技能标签")
 	);
 
+
 	/*
-* Cooldown
-*/
-	
+	 * Cooldown
+	 */
 	GameplayTags.Cooldown_Fire_FireBolt = UGameplayTagsManager::Get().AddNativeGameplayTag(
 		FName("Cooldown.Fire.FireBolt"),
 		FString("火球术冷却标签")
