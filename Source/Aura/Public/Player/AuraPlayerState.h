@@ -11,6 +11,7 @@
 class UAbilitySystemComponent;
 class UAttributeSet;
 
+DECLARE_MULTICAST_DELEGATE_OneParam(FOnPlayerStatChanged, int32 /*NewValue*/);
 /**
  * 
  */
@@ -21,10 +22,20 @@ class AURA_API AAuraPlayerState : public APlayerState, public IAbilitySystemInte
 public:
 	AAuraPlayerState();
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
-	virtual UAbilitySystemComponent* GetAbilitySystemComponent() const override;
-	UAttributeSet* GetAttributeSet() const { return AttributeSet; }
+	virtual UAbilitySystemComponent* GetAbilitySystemComponent() const override;//覆盖虚函数获取asc
+	UAttributeSet* GetAttributeSet() const { return AttributeSet; }//获取as
+	FOnPlayerStatChanged OnXPChangedDelegate;//经验值变动委托
+	FOnPlayerStatChanged OnLevelChangedDelegate;//等级变动委托
 
-	FORCEINLINE int32 GetPlayerLevel() const { return Level; }
+	FORCEINLINE int32 GetPlayerLevel() const { return Level; }//获取角色等级
+	FORCEINLINE int32 GetXP() const { return XP; }
+
+	void AddToXP(int32 InXP);//增加经验值
+	void AddToLevel(int32 InLevel); //增加等级
+	
+	void SetXP(int32 InXP);//增加经验值
+	void SetLevel(int32 InLevel);//设置当前等级
+	
 protected:
 	
 	UPROPERTY(VisibleAnywhere)
@@ -38,6 +49,11 @@ private:
 	UPROPERTY(VisibleAnywhere, ReplicatedUsing = OnRep_Level)
 	int32 Level = 1;
 
+	UPROPERTY(VisibleAnywhere, ReplicatedUsing=OnRep_XP)
+	int32 XP = 1;
 	UFUNCTION()
-	void OnRep_Level(int32 OldLevel);
+	void OnRep_Level(int32 OldLevel);//服务器出现更改自动同步到本地函数 等级
+	
+	UFUNCTION()
+	void OnRep_XP(int32 OldXP);//服务器出现更改自动同步到本地函数 经验值
 };
