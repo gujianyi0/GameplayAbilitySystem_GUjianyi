@@ -29,6 +29,8 @@ class UAuraUserWidget;
 class UAbilityInfo;
 class UAuraAbilitySystemComponent;
 
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnPlayerStatChangedSignature, int32, NewValue);//当玩家状态该表回调类型
+
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnAttributeChangedSignature, float, NewValue);
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FMessageWidgetCreatedSignature, FUIWidgetRow, Row);
@@ -65,7 +67,9 @@ public:
 	
 	UPROPERTY(BlueprintAssignable, Category="GAS|XP")
 	FOnAttributeChangedSignature OnXPPercentChangedDelegate;//经验条百分比变动回调
-
+	
+	UPROPERTY(BlueprintAssignable, Category="GAS|Level")
+	FOnPlayerStatChangedSignature OnPlayerLevelChangedDelegate;//等级变动回调
 
 protected:
 
