@@ -10,7 +10,7 @@ DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FAttributeInfoSignatrue, const FAura
 
 class UAttributeInfo;
 struct FAuraAttributeInfo;
-
+struct FGameplayTag;
 
 /**
  * 
@@ -28,6 +28,9 @@ public:
 	
 	UPROPERTY(BlueprintAssignable, Category="GAS|Attributes")
 	FOnPlayerStatChangedSignature AttributePointsChangedDelegate;//监听属性点的变化委托
+
+	UFUNCTION(BlueprintCallable)
+	void UpgradeAttribute(const FGameplayTag& AttributeTag);
 
 protected:
 
