@@ -41,7 +41,7 @@ public:
 
 	void AddToXP(int32 InXP);//增加经验值
 	void AddToLevel(int32 InLevel); //增加等级
-	void AddToAttributePoints(int32 InPoints);
+	void AddToAttributePoints(int32 InPoints);//增加属性点
 	void AddToSpellPoints(int32 InPoints);
 	
 	void SetXP(int32 InXP);//增加经验值
