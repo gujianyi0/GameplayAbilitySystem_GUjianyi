@@ -29,7 +29,6 @@ class UAuraUserWidget;
 class UAbilityInfo;
 class UAuraAbilitySystemComponent;
 
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnPlayerStatChangedSignature, int32, NewValue);//当玩家状态该表回调类型
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnAttributeChangedSignature, float, NewValue);
 

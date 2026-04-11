@@ -6,9 +6,11 @@
 #include "UI/WidgetController/AuraWidgetController.h"
 #include "AttributeMenuWidgetController.generated.h"
 
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FAttributeInfoSignatrue, const FAuraAttributeInfo&, Info);
+
 class UAttributeInfo;
 struct FAuraAttributeInfo;
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FAttributeInfoSignatrue, const FAuraAttributeInfo&, Info);
+
 
 /**
  * 
@@ -23,6 +25,9 @@ public:
 
 	UPROPERTY(BlueprintAssignable, Category = "GAS|AttributeMenu")
 	FAttributeInfoSignatrue AttributeInfoDelegate;
+	
+	UPROPERTY(BlueprintAssignable, Category="GAS|Attributes")
+	FOnPlayerStatChangedSignature AttributePointsChangedDelegate;//监听属性点的变化委托
 
 protected:
 

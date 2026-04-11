@@ -7,6 +7,8 @@
 
 #include "AuraWidgetController.generated.h"
 
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnPlayerStatChangedSignature, int32, NewValue);//当玩家状态该表回调类型
+
 class UAttributeSet;
 class UAbilitySystemComponent;
 
