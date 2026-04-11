@@ -68,6 +68,7 @@ public:
 
 	virtual void PostGameplayEffectExecute(const FGameplayEffectModCallbackData& Data) override;
 
+	virtual void PostAttributeChange(const FGameplayAttribute& Attribute, float OldValue, float NewValue) override;
 	TMap<FGameplayTag, TStaticFuncPtr<FGameplayAttribute()>> TagsToAttributes;
 	
 
@@ -246,6 +247,10 @@ private:
 	void ShowFloatingText(const FEffectProperties& Props, float Damage, bool bBlockedHit, bool bCriticalHit) const;
 	//发送经验事件
 	void SendXPEvent(const FEffectProperties& Props);
+	
+	//将血量和蓝量填充满, 我们将设置变量
+	bool bTopOffHealth = false;
+	bool bTopOffMana = false;
 };
 
 
