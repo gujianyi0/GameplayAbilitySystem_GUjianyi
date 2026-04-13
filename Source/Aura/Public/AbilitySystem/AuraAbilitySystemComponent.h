@@ -35,10 +35,15 @@ public:
 	static FGameplayTag GetInputTagFromSpec(const FGameplayAbilitySpec& AbilitySpec);
 	static FGameplayTag GetStatusFromSpec(const FGameplayAbilitySpec& AbilitySpec);//获取技能的状态标签
 	
+	FGameplayAbilitySpec* GetSpecFromAbilityTag(const FGameplayTag& AbilityTag);
+
 	void UpgradeAttribute(const FGameplayTag& AttributeTag); //升级属性
 
 	UFUNCTION(Server, Reliable)
 	void ServerUpgradeAttribute(const FGameplayTag& AttributeTag);//服务器升级属性函数
+	
+	void UpdateAbilityStatuses(int32 Level);//根据角色等级更新技能数据状态
+	
 protected:
 	
 	virtual void OnRep_ActivateAbilities() override;
