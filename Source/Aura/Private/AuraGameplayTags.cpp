@@ -224,6 +224,11 @@ void FAuraGameplayTags::InitializeNativeGameplayTags()
 		FString("火球术冷却标签")
 		);
 
+	GameplayTags.Abilities_Lightning_Electrocute = UGameplayTagsManager::Get().AddNativeGameplayTag(
+		FName("Abilities.Lightning.Electrocute"),
+		FString("电击技能标签")
+		);
+
 	/*
 	 * Abilities 技能标签
 	 */

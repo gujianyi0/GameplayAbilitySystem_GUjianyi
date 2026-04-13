@@ -73,6 +73,7 @@ public:
 	FGameplayTag Abilities_Type_None;
 	
 	FGameplayTag Abilities_Fire_FireBolt;
+	FGameplayTag Abilities_Lightning_Electrocute;//雷击技能标签
 	FGameplayTag Cooldown_Fire_FireBolt;//火球术冷却标签
 	
 	FGameplayTag CombatSocket_Weapon;

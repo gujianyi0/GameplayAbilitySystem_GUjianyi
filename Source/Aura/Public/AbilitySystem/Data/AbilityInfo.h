@@ -10,6 +10,7 @@
 /**
  * 
  */
+class UGameplayAbility;
 
 USTRUCT(BlueprintType)
 struct FAuraAbilityInfo
@@ -39,6 +40,14 @@ struct FAuraAbilityInfo
 	//背景材质
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
 	TObjectPtr<const UMaterialInterface> BackgroundMaterial = nullptr;
+	
+	//解锁技能所需角色的等级
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
+	int32 LevelRequirement = 1;
+
+	//解锁技能所需角色的等级
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
+	TSubclassOf<UGameplayAbility> Ability;
 };
 
 /**
