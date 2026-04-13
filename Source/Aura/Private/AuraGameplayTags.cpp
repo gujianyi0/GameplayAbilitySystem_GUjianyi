@@ -120,6 +120,16 @@ void FAuraGameplayTags::InitializeNativeGameplayTags()
 		FString("Input Tag for Keyboard 4")
 		);
 	
+	GameplayTags.InputTag_Passive_1 = UGameplayTagsManager::Get().AddNativeGameplayTag(
+	FName("InputTag.Passive.1"),
+	FString("被动技能1")
+	);
+
+	GameplayTags.InputTag_Passive_2 = UGameplayTagsManager::Get().AddNativeGameplayTag(
+		FName("InputTag.Passive.2"),
+		FString("被动技能2")
+		);
+	
 	GameplayTags.Damage = UGameplayTagsManager::Get().AddNativeGameplayTag(
 	FName("Damage"),
 	FString("伤害标签")

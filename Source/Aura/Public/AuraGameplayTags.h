@@ -47,6 +47,8 @@ public:
 	FGameplayTag InputTag_2;
 	FGameplayTag InputTag_3;
 	FGameplayTag InputTag_4;
+	FGameplayTag InputTag_Passive_1;//被动技能1
+	FGameplayTag InputTag_Passive_2;//被动技能2
 	
 	FGameplayTag Damage;//伤害 标签
 	FGameplayTag Damage_Fire;//火属性伤害 标签
