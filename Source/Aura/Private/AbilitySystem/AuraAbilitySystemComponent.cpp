@@ -113,9 +113,9 @@ FGameplayTag UAuraAbilitySystemComponent::GetInputTagFromSpec(const FGameplayAbi
 
 FGameplayTag UAuraAbilitySystemComponent::GetStatusFromSpec(const FGameplayAbilitySpec& AbilitySpec)
 {
-	for (FGameplayTag StatusTag : AbilitySpec.DynamicAbilityTags)
+	for (FGameplayTag StatusTag : AbilitySpec.DynamicAbilityTags)//从技能实例的动态标签容器中遍历所有标签
 	{
-		if (StatusTag.MatchesTag(FGameplayTag::RequestGameplayTag(FName("Abilities.Status"))))
+		if (StatusTag.MatchesTag(FGameplayTag::RequestGameplayTag(FName("Abilities.Status"))))//查找标签中是否设置以状态标签开头的标签
 		{
 			return StatusTag;
 		}

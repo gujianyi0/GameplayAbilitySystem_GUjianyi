@@ -33,7 +33,7 @@ public:
 
 	static FGameplayTag GetAbilityTagFromSpec(const FGameplayAbilitySpec& AbilitySpec);
 	static FGameplayTag GetInputTagFromSpec(const FGameplayAbilitySpec& AbilitySpec);
-	static FGameplayTag GetStatusFromSpec(const FGameplayAbilitySpec& AbilitySpec);
+	static FGameplayTag GetStatusFromSpec(const FGameplayAbilitySpec& AbilitySpec);//获取技能的状态标签
 	
 	void UpgradeAttribute(const FGameplayTag& AttributeTag); //升级属性
 

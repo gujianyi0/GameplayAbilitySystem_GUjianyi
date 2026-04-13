@@ -224,44 +224,54 @@ void FAuraGameplayTags::InitializeNativeGameplayTags()
 		FString("火球术冷却标签")
 		);
 
+	/*
+	 * Abilities 技能标签
+	 */
 	GameplayTags.Abilities_HitReact = UGameplayTagsManager::Get().AddNativeGameplayTag(
 		FName("Abilities.HitReact"),
-		FString("Hit React Ability")
+		FString("攻击技能标签")
 		);
 
+	
+	/*
+	 * 当前技能状态标签
+	*/
 	GameplayTags.Abilities_Status_Eligible = UGameplayTagsManager::Get().AddNativeGameplayTag(
 		FName("Abilities.Status.Eligible"),
-		FString("Eligible Status")
+		FString("可解锁")
 		);
 
 	GameplayTags.Abilities_Status_Equipped = UGameplayTagsManager::Get().AddNativeGameplayTag(
 		FName("Abilities.Status.Equipped"),
-		FString("Equipped Status")
+		FString("已装配")
 		);
 
 	GameplayTags.Abilities_Status_Locked = UGameplayTagsManager::Get().AddNativeGameplayTag(
 		FName("Abilities.Status.Locked"),
-		FString("Locked Status")
+		FString("已锁定")
 		);
 
 	GameplayTags.Abilities_Status_Unlocked = UGameplayTagsManager::Get().AddNativeGameplayTag(
 		FName("Abilities.Status.Unlocked"),
-		FString("Unlocked Status")
+		FString("已解锁")
 		);
 
+	/*
+	 * 当前技能类型标签
+	*/
 	GameplayTags.Abilities_Type_None = UGameplayTagsManager::Get().AddNativeGameplayTag(
 		FName("Abilities.Type.None"),
-		FString("Type None")
+		FString("无类型")
 		);
 
 	GameplayTags.Abilities_Type_Offensive = UGameplayTagsManager::Get().AddNativeGameplayTag(
 		FName("Abilities.Type.Offensive"),
-		FString("Type Offensive")
+		FString("主动技能")
 		);
 
 	GameplayTags.Abilities_Type_Passive = UGameplayTagsManager::Get().AddNativeGameplayTag(
 		FName("Abilities.Type.Passive"),
-		FString("Type Passive")
+		FString("被动技能")
 		);
 
 	/*
