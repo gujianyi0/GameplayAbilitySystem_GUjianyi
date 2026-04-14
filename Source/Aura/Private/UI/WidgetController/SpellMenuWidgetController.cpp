@@ -15,20 +15,37 @@ void USpellMenuWidgetController::BroadcastInitialValues()
 
 void USpellMenuWidgetController::BindCallbacksToDependencies()
 {
+	//绑定技能状态修改后的委托回调
 	GetAuraASC()->AbilityStatusChanged.AddLambda([this](const FGameplayTag& AbilityTag, const FGameplayTag& StatusTag)
 {
-	if (AbilityInfo)
-	{
-		FAuraAbilityInfo Info = AbilityInfo->FindAbilityInfoForTag(AbilityTag);
+		//技能状态修改，修改技能的升降级按钮的状态
+		if (SelectedAbility.Ability.MatchesTagExact(AbilityTag))
+		{
+			SelectedAbility.Status = StatusTag;
+			bool bEnableSpendPoints = false;
+			bool bEnableEquip = false;
+			ShouldEnableButtons(StatusTag, CurrentSpellPoints, bEnableSpendPoints, bEnableEquip);
+			SpellGlobeSelectedDelegate.Broadcast(bEnableSpendPoints, bEnableEquip);
+		}
+		//广播技能数据更新，用于更新技能按钮显示状态
+		if (AbilityInfo)
+		{
+		FAuraAbilityInfo Info = AbilityInfo->FindAbilityInfoForTag(AbilityTag);//获取到技能数据
 		Info.StatusTag = StatusTag;
 		AbilityInfoDelegate.Broadcast(Info);
-	}
+		}
 });
 	
 	//绑定技能点变动回调
 	GetAuraPS()->OnSpellPointsChangedDelegate.AddLambda([this](int32 SpellPoints)
 	{
 		SpellPointsChanged.Broadcast(SpellPoints); //广播拥有的技能点
+		CurrentSpellPoints = SpellPoints;
+
+		bool bEnableSpendPoints = false;
+		bool bEnableEquip = false;
+		ShouldEnableButtons(SelectedAbility.Status, CurrentSpellPoints, bEnableSpendPoints, bEnableEquip);
+		SpellGlobeSelectedDelegate.Broadcast(bEnableSpendPoints, bEnableEquip);
 	});
 }
 
@@ -53,6 +70,8 @@ void USpellMenuWidgetController::SpellGlobeSelected(const FGameplayTag& AbilityT
 		AbilityStatus = GetAuraASC()->GetStatusFromSpec(*AbilitySpec);
 	}
 
+	SelectedAbility.Ability = AbilityTag;
+	SelectedAbility.Status = AbilityStatus;
 	bool bEnableSpendPoints = false;//技能是否可以升级
 	bool bEnableEquip = false;//技能是否可以装配
 	ShouldEnableButtons(AbilityStatus, SpellPoints, bEnableSpendPoints, bEnableEquip);//获取结果

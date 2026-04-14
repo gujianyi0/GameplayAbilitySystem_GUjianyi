@@ -10,6 +10,13 @@
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FSpellGlobeSelectedSignature, 
 	bool, bSpendPointsButtonEnabled, bool, bEquipButtonEnabled);
+
+struct FSelectedAbility
+{
+	FGameplayTag Ability = FGameplayTag();
+	FGameplayTag Status = FGameplayTag();
+};
+
 /**
  * 
  */
@@ -35,4 +42,6 @@ private:
 	//通过技能状态标签和可分配技能点数来获取技能是否可以装配和技能是否可以升级
 	static void ShouldEnableButtons(const FGameplayTag& AbilityStatus, int32 SpellPoints,
 		bool& bShouldEnableSpellPointsButton, bool& bShouldEnableEquipButton);
+	FSelectedAbility SelectedAbility = { FAuraGameplayTags::Get().Abilities_None,  FAuraGameplayTags::Get().Abilities_Status_Locked };
+	int32 CurrentSpellPoints = 0;
 };
