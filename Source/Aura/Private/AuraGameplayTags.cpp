@@ -232,6 +232,12 @@ void FAuraGameplayTags::InitializeNativeGameplayTags()
 	/*
 	 * Abilities 技能标签
 	 */
+	
+	GameplayTags.Abilities_None = UGameplayTagsManager::Get().AddNativeGameplayTag(
+	FName("Abilities.None"),
+	FString("No Ability - like the nullptr for Ability Tags")
+	);
+	
 	GameplayTags.Abilities_HitReact = UGameplayTagsManager::Get().AddNativeGameplayTag(
 		FName("Abilities.HitReact"),
 		FString("攻击技能标签")

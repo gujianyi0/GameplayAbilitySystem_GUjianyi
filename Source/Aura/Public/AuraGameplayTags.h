@@ -57,7 +57,7 @@ public:
 	FGameplayTag Damage_Physical;//物理伤害 标签
 	FGameplayTag Attributes_Meta_IncomingXP;//元属性经验 标签
 
-	
+	FGameplayTag Abilities_None;
 	FGameplayTag Abilities_Attack;
 	FGameplayTag Abilities_Summon;//召唤技能激活标签
 	

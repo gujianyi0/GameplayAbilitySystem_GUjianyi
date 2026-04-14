@@ -67,7 +67,7 @@ private:
 	int32 AttributePoints = 0;
 
 	UPROPERTY(VisibleAnywhere, ReplicatedUsing=OnRep_SpellPoints)
-	int32 SpellPoints = 1;
+	int32 SpellPoints = 0;
 	
 	UFUNCTION()
 	void OnRep_Level(int32 OldLevel);//服务器出现更改自动同步到本地函数 等级
