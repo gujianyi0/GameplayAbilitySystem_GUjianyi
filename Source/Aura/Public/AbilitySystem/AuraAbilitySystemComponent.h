@@ -49,6 +49,8 @@ public:
 	
 	UFUNCTION(Server, Reliable)
 	void ServerSpendSpellPoint(const FGameplayTag& AbilityTag);//技能状态更新后回调
+	
+	bool GetDescriptionsByAbilityTag(const FGameplayTag& AbilityTag, FString& OutDescription, FString& OutNextLevelDescription);
 protected:
 	
 	virtual void OnRep_ActivateAbilities() override;
