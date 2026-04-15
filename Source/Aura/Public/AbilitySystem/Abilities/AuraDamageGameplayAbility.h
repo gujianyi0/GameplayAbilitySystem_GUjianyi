@@ -30,4 +30,6 @@ protected:
 	//从角色设置的蒙太奇数组总，随机一个蒙太奇使用
 	UFUNCTION(BlueprintPure)
 	FTaggedMontage GetRandomTaggedMontageFromArray(const TArray<FTaggedMontage>& TaggedMontages) const;
+	
+	float GetDamageByDamageType(float InLevel, const FGameplayTag& DamageType);//根据伤害类型获取伤害
 };

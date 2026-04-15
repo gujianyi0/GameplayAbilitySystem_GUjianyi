@@ -22,4 +22,9 @@ public:
 	virtual FString GetDescription(int32 Level);//获取当前等级的技能描述
 	virtual FString GetNextLevelDescription(int32 Level);//获取技能下一等级的技能描述
 	static FString GetLockedDescription(int32 Level);//获取锁定技能描述
+	
+protected:
+
+	float GetManaCost(float InLevel = 1.f) const;
+	float GetCooldown(float InLevel = 1.f) const;
 };
