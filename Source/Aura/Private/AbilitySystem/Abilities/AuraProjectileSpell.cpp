@@ -10,6 +10,25 @@
 #include "Interaction/CombatInterface.h"
 
 
+FString UAuraProjectileSpell::GetDescription(int32 Level)
+{
+	const int32 Damage = DamageTypes[FAuraGameplayTags::Get().Damage_Fire].GetValueAtLevel(Level);
+	if (Level == 1)
+	{
+		return FString::Printf(TEXT("<Title>火球术</>\n\n<Default>发射 1 级火球，在发生撞击时产生爆炸，并造成</><Damage>%d</><Default>点火焰伤害，并有一定几率燃烧。</>\n\n<Small>等级：</><Level>%d</>"), Damage, Level);
+	}
+	else
+	{
+		return FString::Printf(TEXT("<Title>火球术</>\n\n<Default>发射 %d 级火球，在发生撞击时产生爆炸，并造成</><Damage>%d</><Default>点火焰伤害，并有一定几率燃烧。</>\n\n<Small>等级：</><Level>%d</>"), FMath::Min(Level, NumProjectiles), Damage, Level);
+	}
+}
+
+FString UAuraProjectileSpell::GetNextLevelDescription(int32 Level)
+{
+	const int32 Damage = DamageTypes[FAuraGameplayTags::Get().Damage_Fire].GetValueAtLevel(Level);
+	return FString::Printf(TEXT("<Title>下一等级: </>\n\n<Default>发射 %d 级火球，在发生撞击时产生爆炸，并造成</><Damage>%d</><Default>点火焰伤害，并有一定几率燃烧。</>\n\n<Small>等级：</><Level>%d</>"), FMath::Min(Level, NumProjectiles), Damage, Level);
+}
+
 void UAuraProjectileSpell::ActivateAbility(const FGameplayAbilitySpecHandle Handle,
                                            const FGameplayAbilityActorInfo* ActorInfo, const FGameplayAbilityActivationInfo ActivationInfo,
                                            const FGameplayEventData* TriggerEventData)
