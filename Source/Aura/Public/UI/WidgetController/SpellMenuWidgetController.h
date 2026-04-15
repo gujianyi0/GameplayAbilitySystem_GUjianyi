@@ -37,6 +37,9 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void SpellGlobeSelected(const FGameplayTag& AbilityTag);//技能按钮选中调用函数，处理升级按钮和装配
 
+	UFUNCTION(BlueprintCallable)
+	void SpendPointButtonPressed();
+
 private:
 	
 	//通过技能状态标签和可分配技能点数来获取技能是否可以装配和技能是否可以升级

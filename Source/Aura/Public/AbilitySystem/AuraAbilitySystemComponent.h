@@ -9,7 +9,8 @@
 DECLARE_MULTICAST_DELEGATE_OneParam(FEffectAssetTags, const FGameplayTagContainer&/*AssetTags*/)
 DECLARE_MULTICAST_DELEGATE(FAbilitiesGiven);//技能初始化应用后的回调委托
 DECLARE_DELEGATE_OneParam(FForEachAbility, const FGameplayAbilitySpec&);//单播委托，只能绑定一个回调
-DECLARE_MULTICAST_DELEGATE_TwoParams(FAbilityStatusChanged, const FGameplayTag& /*技能标签*/, const FGameplayTag& /*技能状态标签*/)
+DECLARE_MULTICAST_DELEGATE_ThreeParams(FAbilityStatusChanged, const FGameplayTag& /*技能标签*/,
+	const FGameplayTag& /*技能状态标签*/, int32 /*技能等级标签*/)
 /**
  * 
  */
@@ -46,6 +47,8 @@ public:
 	
 	void UpdateAbilityStatuses(int32 Level);//根据角色等级更新技能数据状态
 	
+	UFUNCTION(Server, Reliable)
+	void ServerSpendSpellPoint(const FGameplayTag& AbilityTag);//技能状态更新后回调
 protected:
 	
 	virtual void OnRep_ActivateAbilities() override;
@@ -54,5 +57,5 @@ protected:
 		FActiveGameplayEffectHandle ActiveEffectHandle);
 	
 	UFUNCTION(Client, Reliable)
-	void ClientUpdateAbilityStatus(const FGameplayTag& AbilityTag, const FGameplayTag& StatusTag);
+	void ClientUpdateAbilityStatus(const FGameplayTag& AbilityTag, const FGameplayTag& StatusTag, int32 AbilityLevel);
 };
