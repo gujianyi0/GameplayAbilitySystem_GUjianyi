@@ -10,7 +10,7 @@
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_FourParams(FSpellGlobeSelectedSignature, 
 	bool, bSpendPointsButtonEnabled, bool, bEquipButtonEnabled, FString, DescriptionString, FString, NextLevelDescriptionString);
-
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FWaitForEquipSelectionSignature, const FGameplayTag&, AbilityType);
 struct FSelectedAbility
 {
 	FGameplayTag Ability = FGameplayTag();
@@ -34,6 +34,12 @@ public:
 	UPROPERTY(BlueprintAssignable)
 	FSpellGlobeSelectedSignature SpellGlobeSelectedDelegate;//选中技能按钮后，升级和装备按钮的变动回调
 
+	UPROPERTY(BlueprintAssignable)
+	FWaitForEquipSelectionSignature WaitForEquipDelegate;
+
+	UPROPERTY(BlueprintAssignable)
+	FWaitForEquipSelectionSignature StopWaitingForEquipDelegate;
+
 	UFUNCTION(BlueprintCallable)
 	void SpellGlobeSelected(const FGameplayTag& AbilityTag);//技能按钮选中调用函数，处理升级按钮和装配
 
@@ -42,6 +48,10 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	void GlobeDeselect();
+	
+	UFUNCTION(BlueprintCallable)
+	void EquipButtonPressed();//装配技能按钮按下事件
+
 private:
 	
 	//通过技能状态标签和可分配技能点数来获取技能是否可以装配和技能是否可以升级
@@ -49,4 +59,5 @@ private:
 		bool& bShouldEnableSpellPointsButton, bool& bShouldEnableEquipButton);
 	FSelectedAbility SelectedAbility = { FAuraGameplayTags::Get().Abilities_None,  FAuraGameplayTags::Get().Abilities_Status_Locked };
 	int32 CurrentSpellPoints = 0;
+	bool bWaitingForEquipSelection = false;
 };
