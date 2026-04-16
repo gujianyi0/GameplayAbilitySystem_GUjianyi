@@ -41,6 +41,12 @@ public:
 	FWaitForEquipSelectionSignature StopWaitingForEquipDelegate;
 
 	UFUNCTION(BlueprintCallable)
+	void SpellRowGlobePressed(const FGameplayTag& SlotTag, const FGameplayTag& AbilityType);
+
+	//监听技能装配后的处理
+	void OnAbilityEquipped(const FGameplayTag& AbilityTag, const FGameplayTag& Status, const FGameplayTag& Slot, const FGameplayTag& PreviousSlot);
+
+	UFUNCTION(BlueprintCallable)
 	void SpellGlobeSelected(const FGameplayTag& AbilityTag);//技能按钮选中调用函数，处理升级按钮和装配
 
 	UFUNCTION(BlueprintCallable)
@@ -60,4 +66,5 @@ private:
 	FSelectedAbility SelectedAbility = { FAuraGameplayTags::Get().Abilities_None,  FAuraGameplayTags::Get().Abilities_Status_Locked };
 	int32 CurrentSpellPoints = 0;
 	bool bWaitingForEquipSelection = false;
+	FGameplayTag SelectedSlot;
 };
