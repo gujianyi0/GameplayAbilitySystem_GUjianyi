@@ -62,6 +62,7 @@ void UOverlayWidgetController::BindCallbacksToDependencies()
 
 	if (GetAuraASC())
 	{
+		//监听技能装配的回调
 		GetAuraASC()->AbilityEquipped.AddUObject(this, &UOverlayWidgetController::OnAbilityEquipped);
 		
 		if (GetAuraASC()->bStartupAbilitiesGiven)
@@ -130,7 +131,7 @@ void UOverlayWidgetController::OnAbilityEquipped(const FGameplayTag& AbilityTag,
 	LastSlotInfo.StatusTag = GameplayTags.Abilities_Status_Unlocked;
 	LastSlotInfo.InputTag = PreviousSlot;
 	LastSlotInfo.AbilityTag = GameplayTags.Abilities_None;
-	// Broadcast empty info if PreviousSlot is a valid slot. Only if equipping an already-equipped spell
+	//将上一个槽位的信息广播出去，通知UI进行更新
 	AbilityInfoDelegate.Broadcast(LastSlotInfo);
 
 	FAuraAbilityInfo Info = AbilityInfo->FindAbilityInfoForTag(AbilityTag);
