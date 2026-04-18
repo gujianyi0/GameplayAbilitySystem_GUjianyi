@@ -195,6 +195,22 @@ void FAuraGameplayTags::InitializeNativeGameplayTags()
 		FString("物理属性流血负面标签")
 		);
 
+	GameplayTags.Debuff_Chance = UGameplayTagsManager::Get().AddNativeGameplayTag(
+		FName("Debuff.Chance"),
+		FString("负面效果 触发几率")
+		);
+	GameplayTags.Debuff_Damage = UGameplayTagsManager::Get().AddNativeGameplayTag(
+		FName("Debuff.Damage"),
+		FString("负面效果 伤害")
+		);
+	GameplayTags.Debuff_Duration = UGameplayTagsManager::Get().AddNativeGameplayTag(
+		FName("Debuff.Duration"),
+		FString("负面效果 持续时间")
+		);
+	GameplayTags.Debuff_Frequency = UGameplayTagsManager::Get().AddNativeGameplayTag(
+		FName("Debuff.Frequency"),
+		FString("负面效果 触发间隔")
+		);	
 	/*
 	 * Meta Attributes
 	 */

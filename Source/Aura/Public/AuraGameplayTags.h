@@ -63,6 +63,11 @@ public:
 	FGameplayTag Debuff_Arcane;//魔法伤害负面效果
 	FGameplayTag Debuff_Physical;//物理伤害负面效果 流血
 
+	FGameplayTag Debuff_Chance;//负面效果触发几率标签
+	FGameplayTag Debuff_Damage;//负面效果伤害标签
+	FGameplayTag Debuff_Duration;//负面效果持续时间标签
+	FGameplayTag Debuff_Frequency;//负面效果触发间隔标签
+
 	FGameplayTag Abilities_None;
 	FGameplayTag Abilities_Attack;
 	FGameplayTag Abilities_Summon;//召唤技能激活标签
