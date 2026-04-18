@@ -37,8 +37,8 @@ void AAuraPlayerController::ShowDamageNumber_Implementation(float DamageAmount, 
 	{
 		UDamageTextComponent* DamageText = NewObject<UDamageTextComponent>(TargetCharacter,DamageTextComponentClass);
 		DamageText->RegisterComponent();//动态创建的组件需要调用注册
-		DamageText->AttachToComponent(TargetCharacter->GetRootComponent(), FAttachmentTransformRules::KeepWorldTransform);//先附加到角色身上，使用角色位置
-		DamageText->DetachFromComponent(FDetachmentTransformRules::KeepRelativeTransform);//然后从角色身上分离，保证在一个位置播放完成动画
+		DamageText->AttachToComponent(TargetCharacter->GetRootComponent(), FAttachmentTransformRules::KeepRelativeTransform);//先附加到角色身上，使用角色位置
+		DamageText->DetachFromComponent(FDetachmentTransformRules::KeepWorldTransform);//然后从角色身上分离，保证在一个位置播放完成动画
 		DamageText->SetDamageText(DamageAmount, bBlockedHit, bCriticalHit);//设置显示的伤害数字
 		
 	}
