@@ -36,10 +36,7 @@ public:
 	FGameplayTag Attributes_Secondary_MaxHealth;
 	FGameplayTag Attributes_Secondary_MaxMana;	
 
-	FGameplayTag Attributes_Resistance_Fire;//火属性伤害抵抗 标签
-	FGameplayTag Attributes_Resistance_Lightning;//雷属性伤害抵抗 标签
-	FGameplayTag Attributes_Resistance_Arcane;//魔法伤害抵抗 标签
-	FGameplayTag Attributes_Resistance_Physical;//物理伤害抵抗 标签
+	FGameplayTag Attributes_Meta_IncomingXP;//元属性经验 标签
 	
 	FGameplayTag InputTag_LMB;
 	FGameplayTag InputTag_RMB;
@@ -55,7 +52,16 @@ public:
 	FGameplayTag Damage_Lightning;//雷属性伤害 标签
 	FGameplayTag Damage_Arcane;//魔法伤害 标签
 	FGameplayTag Damage_Physical;//物理伤害 标签
-	FGameplayTag Attributes_Meta_IncomingXP;//元属性经验 标签
+	
+	FGameplayTag Attributes_Resistance_Fire;//火属性伤害抵抗 标签
+	FGameplayTag Attributes_Resistance_Lightning;//雷属性伤害抵抗 标签
+	FGameplayTag Attributes_Resistance_Arcane;//魔法伤害抵抗 标签
+	FGameplayTag Attributes_Resistance_Physical;//物理伤害抵抗 标签
+	
+	FGameplayTag Debuff_Burn;//火属性负面效果 燃烧
+	FGameplayTag Debuff_Stun; //雷属性负面效果 眩晕
+	FGameplayTag Debuff_Arcane;//魔法伤害负面效果
+	FGameplayTag Debuff_Physical;//物理伤害负面效果 流血
 
 	FGameplayTag Abilities_None;
 	FGameplayTag Abilities_Attack;
@@ -91,6 +97,7 @@ public:
 	FGameplayTag CombatSocket_Tail;
 	
 	TMap<FGameplayTag, FGameplayTag> DamageTypesToResistances;//属性伤害标签对应属性抵抗标签
+	TMap<FGameplayTag, FGameplayTag> DamageTypesToDebuffs;//属性伤害标签对应的负面标签
 	
 	FGameplayTag Effects_HitReact;
 	
