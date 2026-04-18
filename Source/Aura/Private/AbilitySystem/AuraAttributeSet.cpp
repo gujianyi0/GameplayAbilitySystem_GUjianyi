@@ -4,6 +4,7 @@
 #include "AbilitySystem/AuraAttributeSet.h"
 
 #include "AbilitySystemBlueprintLibrary.h"
+#include "AuraAbilityTypes.h"
 #include "GameFramework/Character.h"
 #include "GameplayEffectExtension.h"
 #include "Net/UnrealNetwork.h"
@@ -12,6 +13,8 @@
 #include "Interaction/CombatInterface.h"
 #include "Interaction/PlayerInterface.h"
 #include "Player/AuraPlayerController.h"
+
+#include "GameplayEffectComponents/TargetTagsGameplayEffectComponent.h"
 
 UAuraAttributeSet::UAuraAttributeSet()
 {
@@ -135,6 +138,8 @@ void UAuraAttributeSet::PostGameplayEffectExecute(const FGameplayEffectModCallba
 	
 	FEffectProperties Props;
 	SetEffectProperties(Data, Props);
+	
+	if(Props.TargetCharacter->Implements<UCombatInterface>() && ICombatInterface::Execute_IsDead(Props.TargetCharacter)) return;
 
 	if (Data.EvaluatedData.Attribute == GetHealthAttribute())
 	{
@@ -202,6 +207,57 @@ void UAuraAttributeSet::HandleIncomingDamage(const FEffectProperties& Props)
 void UAuraAttributeSet::Debuff(const FEffectProperties& Props)
 {
 	
+	const FAuraGameplayTags& GameplayTags = FAuraGameplayTags::Get();
+	FGameplayEffectContextHandle EffectContext = Props.SourceASC->MakeEffectContext();
+	EffectContext.AddSourceObject(Props.SourceAvatarActor);
+
+	//获取负面效果相关参数
+	const FGameplayTag DamageType = UAuraAbilitySystemLibrary::GetDamageType(Props.EffectContextHandle);
+	const float DebuffDamage = UAuraAbilitySystemLibrary::GetDebuffDamage(Props.EffectContextHandle);
+	const float DebuffDuration = UAuraAbilitySystemLibrary::GetDebuffDuration(Props.EffectContextHandle);
+	const float DebuffFrequency = UAuraAbilitySystemLibrary::GetDebuffFrequency(Props.EffectContextHandle);
+
+	//创建GE所使用的名称，并创建一个可实例化的GE
+	FString DebuffName = FString::Printf(TEXT("DynamicDebuff_%s"), *DamageType.ToString());
+	UGameplayEffect* Effect = NewObject<UGameplayEffect>(GetTransientPackage(), FName(DebuffName));
+
+	//设置动态创建GE的属性
+	Effect->DurationPolicy = EGameplayEffectDurationType::HasDuration;//设置GE为有时间限制的效果
+	Effect->DurationMagnitude = FScalableFloat(DebuffDuration); //设置GE的持续时间
+
+	Effect->Period = DebuffFrequency; //设置GE的触发策略，间隔时间
+	//Effect->InheritableOwnedTagsContainer.AddTag(GameplayTags.DamageTypesToDebuffs[DamageType]);
+	Effect->PeriodicInhibitionPolicy = EGameplayEffectPeriodInhibitionRemovedPolicy::NeverReset; //设置每次应用后不会重置触发时间
+	
+	//在5.3版本修改为通过GEComponent来设置GE应用的标签，向目标Actor增加对应的标签
+	UTargetTagsGameplayEffectComponent& AssetTagsComponent = Effect->FindOrAddComponent<UTargetTagsGameplayEffectComponent>();
+	FInheritedTagContainer InheritedTagContainer;
+	InheritedTagContainer.Added.AddTag(GameplayTags.DamageTypesToDebuffs[DamageType]);
+	AssetTagsComponent.SetAndApplyTargetTagChanges(InheritedTagContainer);
+	
+	
+	//设置可叠加层数
+	Effect->StackingType = EGameplayEffectStackingType::AggregateBySource;//设置GE应用基于释放者查看
+	Effect->StackLimitCount = 1;//设置叠加层数
+
+	//设置属性修改
+	const int32 Index = Effect->Modifiers.Num();//获取当前修改属性的Modifiers的长度，也就是下一个添加的modify的下标索引
+	Effect->Modifiers.Add(FGameplayModifierInfo());//添加一个新的Modify
+	FGameplayModifierInfo& ModifierInfo = Effect->Modifiers[Index];//通过下标索引获取Modify
+
+	ModifierInfo.ModifierMagnitude = FScalableFloat(DebuffDamage);//设置应用的属性值
+	ModifierInfo.ModifierOp = EGameplayModOp::Additive;//设置属性运算符号
+	ModifierInfo.Attribute = UAuraAttributeSet::GetIncomingDamageAttribute();//设置修改的属性
+
+	//创建GE实例，并添加伤害类型标签，应用GE
+	if (FGameplayEffectSpec* MutableSpec = new FGameplayEffectSpec(Effect, EffectContext, 1.f))
+	{
+		FAuraGameplayEffectContext* AuraContext = static_cast<FAuraGameplayEffectContext*>(MutableSpec->GetContext().Get());
+		TSharedPtr<FGameplayTag> DebuffDamageType = MakeShareable(new FGameplayTag(DamageType));
+		AuraContext->SetDamageType(DebuffDamageType);
+
+		Props.TargetASC->ApplyGameplayEffectSpecToSelf(*MutableSpec);
+	}
 }
 
 void UAuraAttributeSet::HandleIncomingXP(const FEffectProperties& Props)
