@@ -242,7 +242,9 @@ public:
 	UFUNCTION()
 	void OnRep_PhysicalResistance(const FGameplayAttributeData& OldPhysicalResistance) const;
 private:
-
+	void HandleIncomingDamage(const FEffectProperties& Props);//处理传入的参数为伤害属性时，处理的逻辑
+	void HandleIncomingXP(const FEffectProperties& Props);	//处理传入的参数为经验属性时，处理的逻辑
+	void Debuff(const FEffectProperties& Props);//如果当前伤害触发了负面效果，处理的逻辑
 	void SetEffectProperties(const FGameplayEffectModCallbackData& Data, FEffectProperties& Props) const;
 	void ShowFloatingText(const FEffectProperties& Props, float Damage, bool bBlockedHit, bool bCriticalHit) const;
 	//发送经验事件

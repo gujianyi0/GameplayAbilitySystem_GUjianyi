@@ -68,7 +68,7 @@ public:
 	void SetDebuffDamage(float InDamage) { DebuffDamage = InDamage; }//设置 负面效果伤害
 	void SetDebuffDuration(float InDuration) { DebuffDuration = InDuration; }//设置 负面效果伤害
 	void SetDebuffFrequency(float InFrequency) { DebuffFrequency = InFrequency; }//设置 负面效果伤害
-	
+	void SetDamageType(TSharedPtr<FGameplayTag> InDamageType) { DamageType = InDamageType; };//设置 负面效果伤害类型
 	/** 返回用于序列化的实际结构体 */
 	virtual UScriptStruct* GetScriptStruct() const
 	{

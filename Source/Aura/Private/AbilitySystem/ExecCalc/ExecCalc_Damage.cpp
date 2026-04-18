@@ -95,7 +95,21 @@ void UExecCalc_Damage::DetermineDebuff(const FGameplayEffectCustomExecutionParam
 			const bool bDebuff = FMath::RandRange(1, 100) < EffectiveDebuffChance;//判断此次效果是否实现命中
 			if (bDebuff)
 			{
-			
+				//获取GE上下文设置负面效果相关配置
+				FGameplayEffectContextHandle ContextHandle = Spec.GetContext();
+
+				//设置当前应用负面效果成功
+				UAuraAbilitySystemLibrary::SetIsSuccessfulDebuff(ContextHandle, true);
+				UAuraAbilitySystemLibrary::SetDamageType(ContextHandle, DamageType);
+
+				const float DebuffDamage = Spec.GetSetByCallerMagnitude(GameplayTags.Debuff_Damage, false, -1.f);
+				const float DebuffDuration = Spec.GetSetByCallerMagnitude(GameplayTags.Debuff_Duration, false, -1.f);
+				const float DebuffFrequency = Spec.GetSetByCallerMagnitude(GameplayTags.Debuff_Frequency, false, -1.f);
+
+				//设置负面效果 伤害类型 伤害 持续时间 触发频率
+				UAuraAbilitySystemLibrary::SetDebuffDamage(ContextHandle, DebuffDamage);
+				UAuraAbilitySystemLibrary::SetDebuffDuration(ContextHandle, DebuffDuration);
+				UAuraAbilitySystemLibrary::SetDebuffFrequency(ContextHandle, DebuffFrequency);
 			}
 		}
 	}
