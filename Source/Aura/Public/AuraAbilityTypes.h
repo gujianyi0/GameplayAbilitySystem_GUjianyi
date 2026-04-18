@@ -54,11 +54,20 @@ struct FAuraGameplayEffectContext : public FGameplayEffectContext
 
 public:
 
-	bool IsCriticalHit() const { return bIsCriticalHit; }
-	bool IsBlockedHit () const { return bIsBlockedHit; }
+	bool IsCriticalHit() const { return bIsCriticalHit; }//获取 暴击
+	bool IsBlockedHit () const { return bIsBlockedHit; }//获取 格挡
+	bool IsSuccessfulDebuff() const { return bIsSuccessfulDebuff; }//获取 应用负面效果
+	float GetDebuffDamage() const { return DebuffDamage; }//获取 负面效果伤害
+	float GetDebuffDuration() const { return DebuffDuration; }//获取 负面效果持续时间
+	float GetDebuffFrequency() const { return DebuffFrequency; }//获取 负面效果伤害触发间隔
+	TSharedPtr<FGameplayTag> GetDamageType() const { return DamageType; }//获取 负面效果伤害类型
 
-	void SetIsCriticalHit(bool bInIsCriticalHit) { bIsCriticalHit = bInIsCriticalHit; }
-	void SetIsBlockedHit(bool bInIsBlockedHit) { bIsBlockedHit = bInIsBlockedHit; }
+	void SetIsCriticalHit(bool bInIsCriticalHit) { bIsCriticalHit = bInIsCriticalHit; }// 设置 暴击
+	void SetIsBlockedHit(bool bInIsBlockedHit) { bIsBlockedHit = bInIsBlockedHit; }// 设置 格挡
+	void SetIsSuccessfulDebuff(bool bInIsDebuff) { bIsSuccessfulDebuff = bInIsDebuff; } //设置 应用负面效果
+	void SetDebuffDamage(float InDamage) { DebuffDamage = InDamage; }//设置 负面效果伤害
+	void SetDebuffDuration(float InDuration) { DebuffDuration = InDuration; }//设置 负面效果伤害
+	void SetDebuffFrequency(float InFrequency) { DebuffFrequency = InFrequency; }//设置 负面效果伤害
 	
 	/** 返回用于序列化的实际结构体 */
 	virtual UScriptStruct* GetScriptStruct() const
@@ -91,6 +100,20 @@ protected:
 	
 	UPROPERTY()
 	bool bIsCriticalHit = false;  //暴击
+	
+	UPROPERTY()
+	bool bIsSuccessfulDebuff = false;
+
+	UPROPERTY()
+	float DebuffDamage = 0.f;
+
+	UPROPERTY()
+	float DebuffDuration = 0.f;
+
+	UPROPERTY()
+	float DebuffFrequency = 0.f;
+
+	TSharedPtr<FGameplayTag> DamageType;
 	
 };
 
