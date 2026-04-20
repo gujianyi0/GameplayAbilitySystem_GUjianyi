@@ -49,14 +49,14 @@ void AAuraCharacterBase::BeginPlay()
 	
 }
 
-void AAuraCharacterBase::Die()
+void AAuraCharacterBase::Die(const FVector& DeathImpulse)
 {
 	//将武器从角色身上分离
 	Weapon->DetachFromComponent(FDetachmentTransformRules(EDetachmentRule::KeepWorld,true));
-	MulticastHandleDeath();
+	MulticastHandleDeath(DeathImpulse);
 }
 
-void AAuraCharacterBase::MulticastHandleDeath_Implementation()
+void AAuraCharacterBase::MulticastHandleDeath_Implementation(const FVector& DeathImpulse)
 {
 	//播放死亡音效
 	UGameplayStatics::PlaySoundAtLocation(this, DeathSound, GetActorLocation(), GetActorRotation());
@@ -64,13 +64,15 @@ void AAuraCharacterBase::MulticastHandleDeath_Implementation()
 	Weapon->SetSimulatePhysics(true); //开启模拟物理效果
 	Weapon->SetEnableGravity(true); //开启重力效果
 	Weapon->SetCollisionEnabled(ECollisionEnabled::PhysicsOnly); //开启物理碰撞通道
-
+	Weapon->AddImpulse(DeathImpulse * 0.1f, NAME_None, true);//添加死亡冲量，乘以一个系数来调整武器飞出的距离
+	
 	//开启角色物理效果
 	GetMesh()->SetSimulatePhysics(true); //开启模拟物理效果
 	GetMesh()->SetEnableGravity(true); //开启重力效果
 	GetMesh()->SetCollisionEnabled(ECollisionEnabled::PhysicsOnly); //开启物理碰撞通道
 	GetMesh()->SetCollisionResponseToChannel(ECC_WorldStatic, ECR_Block); //开启角色与静态物体产生碰撞
-
+	GetMesh()->AddImpulse(DeathImpulse, NAME_None, true);//添加死亡冲量
+	
 	//关闭角色碰撞体碰撞通道，避免其对武器和角色模拟物理效果产生影响
 	GetCapsuleComponent()->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 	
