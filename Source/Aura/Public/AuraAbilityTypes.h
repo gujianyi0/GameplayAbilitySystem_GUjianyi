@@ -48,6 +48,10 @@ struct FDamageEffectParams
 	//死亡时施加的冲力大小
 	UPROPERTY()
 	float DeathImpulseMagnitude = 0.f;
+	
+	//死亡时受到冲击的朝向
+	UPROPERTY()
+	FVector DeathImpulse = FVector::ZeroVector;
 };
 
 
@@ -65,7 +69,8 @@ public:
 	float GetDebuffDuration() const { return DebuffDuration; }//获取 负面效果持续时间
 	float GetDebuffFrequency() const { return DebuffFrequency; }//获取 负面效果伤害触发间隔
 	TSharedPtr<FGameplayTag> GetDamageType() const { return DamageType; }//获取 负面效果伤害类型
-
+	FVector GetDeathImpulse() const { return DeathImpulse; }//获取到死亡冲击的方向和力度
+	
 	void SetIsCriticalHit(bool bInIsCriticalHit) { bIsCriticalHit = bInIsCriticalHit; }// 设置 暴击
 	void SetIsBlockedHit(bool bInIsBlockedHit) { bIsBlockedHit = bInIsBlockedHit; }// 设置 格挡
 	void SetIsSuccessfulDebuff(bool bInIsDebuff) { bIsSuccessfulDebuff = bInIsDebuff; } //设置 应用负面效果
@@ -73,6 +78,7 @@ public:
 	void SetDebuffDuration(float InDuration) { DebuffDuration = InDuration; }//设置 负面效果伤害
 	void SetDebuffFrequency(float InFrequency) { DebuffFrequency = InFrequency; }//设置 负面效果伤害
 	void SetDamageType(TSharedPtr<FGameplayTag> InDamageType) { DamageType = InDamageType; };//设置 负面效果伤害类型
+	void SetDeathImpulse(const FVector& InImpulse) { DeathImpulse = InImpulse; }
 	/** 返回用于序列化的实际结构体 */
 	virtual UScriptStruct* GetScriptStruct() const
 	{
@@ -119,6 +125,9 @@ protected:
 
 	TSharedPtr<FGameplayTag> DamageType;
 	
+	
+	UPROPERTY()
+	FVector DeathImpulse = FVector::ZeroVector; //死亡时受到冲击的朝向
 };
 
 template<>
