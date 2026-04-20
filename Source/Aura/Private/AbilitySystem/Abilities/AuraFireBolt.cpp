@@ -3,7 +3,9 @@
 
 #include "AbilitySystem/Abilities/AuraFireBolt.h"
 
-#include "Kismet/KismetSystemLibrary.h"
+#include "AbilitySystem/AuraAbilitySystemLibrary.h"
+#include "Actor/AuraProjectile.h"
+#include "GameFramework/ProjectileMovementComponent.h"
 #include "Aura/Public/AuraGameplayTags.h"
 
 FString UAuraFireBolt::GetDescription(int32 Level)
@@ -23,7 +25,7 @@ FString UAuraFireBolt::GetDescription(int32 Level)
 		"<Small>蓝量消耗： </><Cooldown>%.1f</>\n\n"//%.1f会四舍五入到小数点后一位
 
 		// 技能描述
-		"<Default>发射 %d 级火球,"
+		"<Default>发射 %d 颗火球,"
 		"在发生撞击时产生爆炸，并造成 </>"
 
 		// Damage
@@ -34,6 +36,7 @@ FString UAuraFireBolt::GetDescription(int32 Level)
 		Level,
 		ManaCost,
 		Cooldown,
+		FMath::Min(Level, NumProjectiles),
 		ScaledDamage);
 		
 	}
@@ -49,7 +52,7 @@ FString UAuraFireBolt::GetDescription(int32 Level)
 			"<Small>蓝量消耗： </><Cooldown>%.1f</>\n\n"//%.1f会四舍五入到小数点后一位
 
 			// 技能描述
-			"<Default>发射 %d 级火球,"
+			"<Default>发射 %d 颗火球,"
 			"在发生撞击时产生爆炸，并造成 </>"
 
 			// Damage
@@ -81,7 +84,7 @@ FString UAuraFireBolt::GetNextLevelDescription(int32 Level)
 	"<Small>蓝量消耗： </><Cooldown>%.1f</>\n\n"//%.1f会四舍五入到小数点后一位
 
 	// 技能描述
-	"<Default>发射 %d 级火球,"
+	"<Default>发射 %d 颗火球,"
 	"在发生撞击时产生爆炸，并造成 </>"
 
 	// Damage
@@ -108,48 +111,48 @@ void UAuraFireBolt::SpawnProjectiles(const FVector& ProjectileTargetLocation, co
 	FRotator Rotation = (ProjectileTargetLocation - SocketLocation).Rotation();//将方向转为旋转
 	if (bOverridePitch) Rotation.Pitch = PitchOverride;//覆写发射角度
 	
-	const FVector Forward = Rotation.Vector();
-	const FVector LeftOfSpread = Forward.RotateAngleAxis(-ProjectileSpread / 2.f, FVector::UpVector);//获取到最左侧的角度
-	const FVector RightOfSpread = Forward.RotateAngleAxis(ProjectileSpread / 2.f, FVector::UpVector);//获取到最右侧的角度
+	const FVector Forward = Rotation.Vector();//获取朝向向量
 	
-
-	//限制产生火球的最大数量
-	//NumProjectiles = FMath::Min(MaxNumProjectiles, GetAbilityLevel());
+	const int32 EffectiveNumProjectiles = FMath::Min(NumProjectiles, GetAbilityLevel());
+	//根据函数获取到所有生成的转向
+	TArray<FRotator> Rotations = UAuraAbilitySystemLibrary::EvenlySpacedRotators(Forward, FVector::UpVector, ProjectileSpread, EffectiveNumProjectiles);
 	
-	//根据可生成数量进行逻辑判断
-	if (NumProjectiles > 1)
+	//遍历所有朝向，并生成火球术
+	for (const FRotator& Rot : Rotations)
 	{
+		FTransform SpawnTransform;
+		SpawnTransform.SetLocation(SocketLocation);
+		SpawnTransform.SetRotation(Rot.Quaternion());
+
+		//SpawnActorDeferred将异步创建实例，在实例创建完成时，相应的数据已经应用到了实例身上
+		AAuraProjectile* Projectile = GetWorld()->SpawnActorDeferred<AAuraProjectile>(
+		ProjectileClass,
+		SpawnTransform,
+		GetOwningActorFromActorInfo(),
+		Cast<APawn>(GetOwningActorFromActorInfo()),
+		ESpawnActorCollisionHandlingMethod::AlwaysSpawn);
+	
+		Projectile->DamageEffectParams = MakeDamageEffectParamsFromClassDefaults();
 		
-		const float DeltaSpread = ProjectileSpread / (NumProjectiles - 1);//技能分的段数
-		for (int32 i = 0; i < NumProjectiles; i++)
+		//根据目标类型设置HomingTargetComponent，此内容必须在飞弹被生成后设置
+		if (HomingTarget && HomingTarget->Implements<UCombatInterface>())
 		{
-			const FVector Direction = LeftOfSpread.RotateAngleAxis(DeltaSpread * i, FVector::UpVector);
-			const FVector Start = SocketLocation + FVector(0,0,5);
-			UKismetSystemLibrary::DrawDebugArrow(
-				GetAvatarActorFromActorInfo(),
-				Start,
-				Start + Direction * 75.f,
-				1,
-				FLinearColor::Red,
-				120,
-				1);
+			//设置攻击的位置为攻击对象的根位置
+			Projectile->ProjectileMovement->HomingTargetComponent = HomingTarget->GetRootComponent();
+			
 		}
+		else
+		{
+			//如果没有获取到攻击目标，则创建一个可销毁的并应用
+			Projectile->HomingTargetSceneComponent = NewObject<USceneComponent>(USceneComponent::StaticClass());
+			Projectile->HomingTargetSceneComponent->SetWorldLocation(ProjectileTargetLocation);
+			Projectile->ProjectileMovement->HomingTargetComponent = Projectile->HomingTargetSceneComponent;
+		}
+		//设置飞弹朝向目标时的加速度
+		Projectile->ProjectileMovement->HomingAccelerationMagnitude = FMath::FRandRange(HomingAccelerationMin, HomingAccelerationMax);
+		Projectile->ProjectileMovement->bIsHomingProjectile = bLaunchHomingProjectiles;
+		
+		//确保变换设置被正确应用
+		Projectile->FinishSpawning(SpawnTransform);
 	}
-	else
-	{
-		// Single projectile
-		const FVector Start = SocketLocation + FVector(0,0,5);
-		UKismetSystemLibrary::DrawDebugArrow(
-				GetAvatarActorFromActorInfo(),
-				Start,
-				Start + Forward * 75.f,
-				1,
-				FLinearColor::Red,
-				120,
-				1);
-	}
-
-	UKismetSystemLibrary::DrawDebugArrow(GetAvatarActorFromActorInfo(), SocketLocation, SocketLocation + Forward * 100.f, 1, FLinearColor::White, 120, 1);
-	UKismetSystemLibrary::DrawDebugArrow(GetAvatarActorFromActorInfo(), SocketLocation, SocketLocation + LeftOfSpread * 100.f, 1, FLinearColor::Gray, 120, 1);
-	UKismetSystemLibrary::DrawDebugArrow(GetAvatarActorFromActorInfo(), SocketLocation, SocketLocation + RightOfSpread * 100.f, 1, FLinearColor::Gray, 120, 1);
 }
