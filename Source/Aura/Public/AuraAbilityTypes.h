@@ -44,6 +44,10 @@ struct FDamageEffectParams
 
 	UPROPERTY()
 	float DebuffFrequency = 0.f;//负面效果触发频率
+	
+	//死亡时施加的冲力大小
+	UPROPERTY()
+	float DeathImpulseMagnitude = 0.f;
 };
 
 
