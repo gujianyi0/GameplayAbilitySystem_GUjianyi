@@ -22,6 +22,7 @@ public:
 	void CauseDamage(AActor* TargetActor);
 	
 	//创建技能负面效果使用的结构体
+	UFUNCTION(BlueprintPure)
 	FDamageEffectParams MakeDamageEffectParamsFromClassDefaults(AActor* TargetActor = nullptr) const;
 protected:
 
@@ -48,7 +49,15 @@ protected:
 
 	//死亡时施加的冲力大小
 	UPROPERTY(EditDefaultsOnly, Category = "Damage")
-	float DeathImpulseMagnitude = 60.f;
+	float DeathImpulseMagnitude = 1000.f;
+
+	//击中时施加的冲力大小
+	UPROPERTY(EditDefaultsOnly, Category = "Damage")
+	float KnockbackForceMagnitude = 1000.f;
+
+	//击中时触发击退的概率
+	UPROPERTY(EditDefaultsOnly, Category = "Damage")
+	float KnockbackChance = 0.f;
 	
 	//负面效果持续时间
 	UPROPERTY(EditDefaultsOnly, Category = "Damage")
