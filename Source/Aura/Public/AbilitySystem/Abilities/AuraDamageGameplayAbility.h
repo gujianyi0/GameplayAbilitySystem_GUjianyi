@@ -34,17 +34,21 @@ protected:
 	UPROPERTY(EditDefaultsOnly, Category = "Damage")
 	FScalableFloat Damage;
 	
+	//触发负面效果概率
 	UPROPERTY(EditDefaultsOnly, Category = "Damage")
-	float DebuffChance = 20.f;//触发负面效果概率
+	float DebuffChance = 20.f;
 
+	//负面效果伤害
 	UPROPERTY(EditDefaultsOnly, Category = "Damage")
-	float DebuffDamage = 5.f;//负面效果伤害
+	float DebuffDamage = 5.f;
+	
+	//负面效果触发频率
+	UPROPERTY(EditDefaultsOnly, Category = "Damage")
+	float DebuffFrequency = 1.f;
 
+	//负面效果持续时间
 	UPROPERTY(EditDefaultsOnly, Category = "Damage")
-	float DebuffFrequency = 1.f;//负面效果触发频率
-
-	UPROPERTY(EditDefaultsOnly, Category = "Damage")
-	float DebuffDuration = 5.f;//负面效果持续时间
+	float DebuffDuration = 5.f;
 
 	//从角色设置的蒙太奇数组总，随机一个蒙太奇使用
 	UFUNCTION(BlueprintPure)

@@ -231,9 +231,9 @@ void UAuraAttributeSet::Debuff(const FEffectProperties& Props)
 	
 	//在5.3版本修改为通过GEComponent来设置GE应用的标签，向目标Actor增加对应的标签
 	UTargetTagsGameplayEffectComponent& AssetTagsComponent = Effect->FindOrAddComponent<UTargetTagsGameplayEffectComponent>();
-	FInheritedTagContainer InheritedTagContainer;
-	InheritedTagContainer.Added.AddTag(GameplayTags.DamageTypesToDebuffs[DamageType]);
-	AssetTagsComponent.SetAndApplyTargetTagChanges(InheritedTagContainer);
+	FInheritedTagContainer InheritedTagContainer;//创建组件所需的标签容器
+	InheritedTagContainer.Added.AddTag(GameplayTags.DamageTypesToDebuffs[DamageType]);//添加标签
+	AssetTagsComponent.SetAndApplyTargetTagChanges(InheritedTagContainer);//应用并更新标签
 	
 	
 	//设置可叠加层数
@@ -277,15 +277,16 @@ void UAuraAttributeSet::HandleIncomingXP(const FEffectProperties& Props)
 		if (NumLevelUps > 0)
 		{
 			//如果连升多级，我们通过for循环获取每个等级的奖励
-			//for(int32 i = CurrentLevel; i < NewLevel; i++){219-226}
-			//获取升级提供的技能点和属性点
-			const int32 AttributePointsReward = IPlayerInterface::Execute_GetAttributePointsReward(Props.SourceCharacter, CurrentLevel);
-			const int32 SpellPointsReward = IPlayerInterface::Execute_GetSpellPointsReward(Props.SourceCharacter, CurrentLevel);
+			for(int32 i = CurrentLevel; i < NewLevel; i++)
+			{
+				//获取升级提供的技能点和属性点
+				const int32 AttributePointsReward = IPlayerInterface::Execute_GetAttributePointsReward(Props.SourceCharacter, CurrentLevel);
+				const int32 SpellPointsReward = IPlayerInterface::Execute_GetSpellPointsReward(Props.SourceCharacter, CurrentLevel);
 
-			//增加角色技能点和属性点
-			IPlayerInterface::Execute_AddToAttributePoints(Props.SourceCharacter, AttributePointsReward);
-			IPlayerInterface::Execute_AddToSpellPoints(Props.SourceCharacter, SpellPointsReward);
-			
+				//增加角色技能点和属性点
+				IPlayerInterface::Execute_AddToAttributePoints(Props.SourceCharacter, AttributePointsReward);
+				IPlayerInterface::Execute_AddToSpellPoints(Props.SourceCharacter, SpellPointsReward);
+			}
 			//提升等级
 			IPlayerInterface::Execute_AddToPlayerLevel(Props.SourceCharacter, NumLevelUps);
 
