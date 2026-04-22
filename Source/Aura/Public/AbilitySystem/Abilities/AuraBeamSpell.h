@@ -19,7 +19,7 @@ public:
 	void StoreMouseDataInfo(const FHitResult& HitResult);
 
 	UFUNCTION(BlueprintCallable)
-	void StoreOwnerPlayerController();
+	void StoreOwnerVariables();
 protected:
 
 	//鼠标拾取位置
@@ -33,4 +33,8 @@ protected:
 	//拥有当前技能的玩家控制器
 	UPROPERTY(BlueprintReadWrite, Category = "Beam")
 	TObjectPtr<APlayerController> OwnerPlayerController;
+	
+	//拥有当前技能的玩家角色
+	UPROPERTY(BlueprintReadWrite, Category = "Beam")
+	TObjectPtr<ACharacter> OwnerCharacter;
 };
