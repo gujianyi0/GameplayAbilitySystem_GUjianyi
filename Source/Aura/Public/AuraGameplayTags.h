@@ -106,6 +106,10 @@ public:
 	
 	FGameplayTag Effects_HitReact;
 	
+	FGameplayTag Player_Block_InputPressed;//阻挡键位按下输入
+	FGameplayTag Player_Block_InputHeld;//阻挡键位悬停输入
+	FGameplayTag Player_Block_InputReleased;//阻挡键位抬起输入
+	FGameplayTag Player_Block_CursorTrace;//阻挡鼠标拾取事件
 protected:
 
 private:

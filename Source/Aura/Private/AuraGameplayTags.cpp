@@ -379,6 +379,30 @@ void FAuraGameplayTags::InitializeNativeGameplayTags()
 		FName("Montage.Attack.4"),
 		FString("Attack 4")
 		);
+	
+	/*
+	 * 阻止相关鼠标事件的触发标签
+	 */
+
+	GameplayTags.Player_Block_CursorTrace = UGameplayTagsManager::Get().AddNativeGameplayTag(
+		FName("Player.Block.CursorTrace"),
+		FString("阻挡鼠标拾取事件")
+		);
+
+	GameplayTags.Player_Block_InputHeld = UGameplayTagsManager::Get().AddNativeGameplayTag(
+		FName("Player.Block.InputHeld"),
+		FString("阻挡键位悬停输入")
+		);
+
+	GameplayTags.Player_Block_InputPressed = UGameplayTagsManager::Get().AddNativeGameplayTag(
+		FName("Player.Block.InputPressed"),
+		FString("阻挡键位按下输入")
+		);
+
+	GameplayTags.Player_Block_InputReleased = UGameplayTagsManager::Get().AddNativeGameplayTag(
+		FName("Player.Block.InputReleased"),
+		FString("阻挡键位抬起输入")
+		);
 }
 
 
