@@ -15,11 +15,26 @@ class AURA_API UAuraBeamSpell : public UAuraDamageGameplayAbility
 	GENERATED_BODY()
 	
 public:
+	/**
+	 * 将鼠标拾取命中信息存储
+	 * @param HitResult 在技能中通过TargetDataUnderMouse的task获取到的结果
+	 */
 	UFUNCTION(BlueprintCallable)
 	void StoreMouseDataInfo(const FHitResult& HitResult);
 
+	/**
+	 * 设置拥有当前技能的玩家控制器
+	 */
 	UFUNCTION(BlueprintCallable)
 	void StoreOwnerVariables();
+	
+	/**
+	 * 拾取闪电链命中的第一个目标
+	 * @param BeamTargetLocation 鼠标点击目标位置
+	 * @note 有可能中间会被阻挡，拾取的目标不是鼠标选中的目标
+	 */
+	UFUNCTION(BlueprintCallable)
+	void TraceFirstTarget(const FVector& BeamTargetLocation);
 protected:
 
 	//鼠标拾取位置

@@ -3,6 +3,7 @@
 
 #include "AbilitySystem/Abilities/AuraBeamSpell.h"
 #include "GameFramework/Character.h"
+#include "Kismet/KismetSystemLibrary.h"
 
 void UAuraBeamSpell::StoreMouseDataInfo(const FHitResult& HitResult)
 {
@@ -27,4 +28,42 @@ void UAuraBeamSpell::StoreOwnerVariables()
 		OwnerCharacter = Cast<ACharacter>(CurrentActorInfo->AvatarActor);
 		
 	}
+}
+
+void UAuraBeamSpell::TraceFirstTarget(const FVector& BeamTargetLocation)
+{
+	//确保所有者继承了战斗接口
+	check(OwnerCharacter);
+	if (OwnerCharacter->Implements<UCombatInterface>())
+	{
+		//获取到武器
+		if (USkeletalMeshComponent* Weapon = ICombatInterface::Execute_GetWeapon(OwnerCharacter))
+		{
+			TArray<AActor*> ActorsToIgnore;//当前需要忽略的对象数组
+			ActorsToIgnore.Add(OwnerCharacter);// 将自身忽略掉
+			FHitResult HitResult;
+			const FVector SocketLocation = Weapon->GetSocketLocation(FName("TipSocket"));//获取技能发射位置
+			
+			//通过武器发射位置和命中位置生成一条球形线，获取第一个命中的结果
+			UKismetSystemLibrary::SphereTraceSingle(
+				OwnerCharacter,
+				SocketLocation,
+				BeamTargetLocation,
+				10.f,
+				TraceTypeQuery1,
+				false,
+				ActorsToIgnore,
+				EDrawDebugTrace::None, //如果需要debug，将其设置ForDuration，如果关闭设置为None
+				HitResult,
+				true);
+
+			//如果有命中的结果，修改拾取结果
+			if (HitResult.bBlockingHit)
+			{
+				MouseHitLocation = HitResult.ImpactPoint;
+				MouseHitActor = HitResult.GetActor();
+			}
+		}
+	}
+	
 }
