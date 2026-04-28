@@ -2,6 +2,7 @@
 
 
 #include "AbilitySystem/Abilities/AuraBeamSpell.h"
+#include "AbilitySystem/AuraAbilitySystemLibrary.h"
 #include "GameFramework/Character.h"
 #include "Kismet/KismetSystemLibrary.h"
 
@@ -66,4 +67,27 @@ void UAuraBeamSpell::TraceFirstTarget(const FVector& BeamTargetLocation)
 		}
 	}
 	
+}
+
+void UAuraBeamSpell::StoreAdditionalTargets(TArray<AActor*>& OutAdditionalTargets)
+{
+	TArray<AActor*> ActorsToIgnore;//遍历时忽略的数组
+	ActorsToIgnore.Add(GetAvatarActorFromActorInfo());//忽略自身
+	ActorsToIgnore.Add(MouseHitActor);//忽略鼠标命中的的敌人
+	
+	TArray<AActor*> OverlappingActors;//存放遍历结果的数组
+	
+	//通过封装的函数获取到技能范围内散射的目标
+	UAuraAbilitySystemLibrary::GetLivePlayersWithinRadius(
+		GetAvatarActorFromActorInfo(),
+		OverlappingActors,
+		ActorsToIgnore,
+		850.f,
+		MouseHitActor->GetActorLocation());
+	
+	//int32 NumAdditionalTargets = FMath::Min(GetAbilityLevel() - 1, MaxNumShockTargets);
+	int32 NumAdditionTargets = 5;
+	
+	//通过自定义函数来获取最近的几个目标
+	UAuraAbilitySystemLibrary::GetClosestTargets(NumAdditionTargets, OverlappingActors, OutAdditionalTargets, MouseHitActor->GetActorLocation());
 }
