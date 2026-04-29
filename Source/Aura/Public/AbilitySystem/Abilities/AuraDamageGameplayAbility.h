@@ -24,6 +24,9 @@ public:
 	//创建技能负面效果使用的结构体
 	UFUNCTION(BlueprintPure)
 	FDamageEffectParams MakeDamageEffectParamsFromClassDefaults(AActor* TargetActor = nullptr) const;
+	
+	UFUNCTION(BlueprintPure)
+	float GetDamageAtLevel() const;
 protected:
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
