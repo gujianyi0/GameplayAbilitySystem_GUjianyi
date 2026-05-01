@@ -13,6 +13,7 @@ class UNiagaraSystem;
 class UAnimMontage;
 
 DECLARE_MULTICAST_DELEGATE_OneParam(FOnASCRegistered, UAbilitySystemComponent*)
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnDeathSignature, AActor*, DeadActor);
 
 //蒙太奇动画和标签以及骨骼位置的映射，用于攻击技能获取和设置攻击范围
 USTRUCT(BlueprintType)
@@ -66,6 +67,7 @@ public:
 	UAnimMontage* GetHitReactMontage();
 	
 	virtual void Die(const FVector& DeathImpulse) = 0;
+	virtual FOnDeathSignature& GetOnDeathDelegate() = 0;
 	
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
 	bool IsDead() const;//获取当前角色是否死亡
