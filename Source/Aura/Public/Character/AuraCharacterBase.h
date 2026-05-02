@@ -67,7 +67,7 @@ public:
 
 	UPROPERTY(ReplicatedUsing=OnRep_Burned, BlueprintReadOnly)
 	bool bIsBurned = false;
-
+	
 	UFUNCTION()
 	virtual void OnRep_Stunned();
 
