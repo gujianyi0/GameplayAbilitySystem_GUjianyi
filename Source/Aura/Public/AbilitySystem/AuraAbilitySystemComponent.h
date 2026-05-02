@@ -13,6 +13,7 @@ DECLARE_MULTICAST_DELEGATE_ThreeParams(FAbilityStatusChanged, const FGameplayTag
 	const FGameplayTag& /*技能状态标签*/, int32 /*技能等级标签*/)
 DECLARE_MULTICAST_DELEGATE_FourParams(FAbilityEquipped, const FGameplayTag& /*技能标签*/, 
 	const FGameplayTag& /*技能状态标签*/, const FGameplayTag& /*输入标签*/, const FGameplayTag& /*上一个输入标签*/);
+DECLARE_MULTICAST_DELEGATE_OneParam(FDeactivatePassiveAbility, const FGameplayTag& /*能力标签*/);
 /**
  * 
  */
@@ -28,6 +29,7 @@ public:
 	FAbilitiesGiven AbilitiesGivenDelegate;//技能初始化应用后的回调委托
 	FAbilityStatusChanged AbilityStatusChanged;//技能状态改变的回调委托
 	FAbilityEquipped AbilityEquipped;//技能装配更新回调
+	FDeactivatePassiveAbility DeactivatePassiveAbility;
 
 	void AddCharacterAbilities(const TArray<TSubclassOf<UGameplayAbility>>& StartupAbilities);
 	void AddCharacterPassiveAbilities(const TArray<TSubclassOf<UGameplayAbility>>& StartupPassiveAbilities);//应用被动技能
