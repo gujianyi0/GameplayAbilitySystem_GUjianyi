@@ -42,6 +42,9 @@ public:
 	
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	TObjectPtr<UNiagaraComponent> LevelUpNiagaraComponent;//升级特效组件
+	
+	virtual void OnRep_Stunned() override;
+	virtual void OnRep_Burned() override;
 private:
 	UPROPERTY(VisibleAnywhere)
 	TObjectPtr<UCameraComponent> TopDownCameraComponent;//相机组件

@@ -233,12 +233,31 @@ void UAuraAttributeSet::Debuff(const FEffectProperties& Props)
 
 	Effect->Period = DebuffFrequency; //设置GE的触发策略，间隔时间
 	//Effect->InheritableOwnedTagsContainer.AddTag(GameplayTags.DamageTypesToDebuffs[DamageType]);
+	const FGameplayTag DebuffTag = GameplayTags.DamageTypesToDebuffs[DamageType];
+	// Effect->InheritableOwnedTagsContainer.AddTag(DebuffTag);
+	// if (DebuffTag.MatchesTagExact(GameplayTags.Debuff_Stun))
+	// {
+	// 	Effect->InheritableOwnedTagsContainer.AddTag(GameplayTags.Player_Block_CursorTrace);
+	// 	Effect->InheritableOwnedTagsContainer.AddTag(GameplayTags.Player_Block_InputHeld);
+	// 	Effect->InheritableOwnedTagsContainer.AddTag(GameplayTags.Player_Block_InputPressed);
+	// 	Effect->InheritableOwnedTagsContainer.AddTag(GameplayTags.Player_Block_InputReleased);
+	// }
 	Effect->PeriodicInhibitionPolicy = EGameplayEffectPeriodInhibitionRemovedPolicy::NeverReset; //设置每次应用后不会重置触发时间
 	
 	//在5.3版本修改为通过GEComponent来设置GE应用的标签，向目标Actor增加对应的标签
 	UTargetTagsGameplayEffectComponent& AssetTagsComponent = Effect->FindOrAddComponent<UTargetTagsGameplayEffectComponent>();
 	FInheritedTagContainer InheritedTagContainer;//创建组件所需的标签容器
 	InheritedTagContainer.Added.AddTag(GameplayTags.DamageTypesToDebuffs[DamageType]);//添加标签
+	InheritedTagContainer.Added.AddTag(DebuffTag);
+
+	if (DebuffTag.MatchesTagExact(GameplayTags.Debuff_Stun))
+	{
+		// 眩晕，因此中断输入
+		InheritedTagContainer.Added.AddTag(GameplayTags.Player_Block_CursorTrace);
+		InheritedTagContainer.Added.AddTag(GameplayTags.Player_Block_InputHeld);
+		InheritedTagContainer.Added.AddTag(GameplayTags.Player_Block_InputPressed);
+		InheritedTagContainer.Added.AddTag(GameplayTags.Player_Block_InputReleased);
+	}
 	AssetTagsComponent.SetAndApplyTargetTagChanges(InheritedTagContainer);//应用并更新标签
 	
 	
