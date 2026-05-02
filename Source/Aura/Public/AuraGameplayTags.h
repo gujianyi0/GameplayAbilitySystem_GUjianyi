@@ -85,6 +85,11 @@ public:
 	
 	FGameplayTag Abilities_Fire_FireBolt;
 	FGameplayTag Abilities_Lightning_Electrocute;//雷击技能标签
+	
+	FGameplayTag Abilities_Passive_HaloOfProtection;
+	FGameplayTag Abilities_Passive_LifeSiphon;
+	FGameplayTag Abilities_Passive_ManaSiphon;
+
 	FGameplayTag Cooldown_Fire_FireBolt;//火球术冷却标签
 	
 	FGameplayTag CombatSocket_Weapon;

@@ -275,7 +275,25 @@ void FAuraGameplayTags::InitializeNativeGameplayTags()
 		FName("Abilities.Lightning.Electrocute"),
 		FString("电击技能标签")
 		);
+	
 
+	/*
+	 * 被动法术
+	 */
+	
+	GameplayTags.Abilities_Passive_LifeSiphon = UGameplayTagsManager::Get().AddNativeGameplayTag(
+			FName("Abilities.Passive.LifeSiphon"),
+			FString("生命自动回复")
+			);
+	GameplayTags.Abilities_Passive_ManaSiphon = UGameplayTagsManager::Get().AddNativeGameplayTag(
+			FName("Abilities.Passive.ManaSiphon"),
+			FString("蓝量自动回复")
+			);
+	GameplayTags.Abilities_Passive_HaloOfProtection = UGameplayTagsManager::Get().AddNativeGameplayTag(
+			FName("Abilities.Passive.HaloOfProtection"),
+			FString("守护光环")
+			);
+	
 	/*
 	 * Abilities 技能标签
 	 */
