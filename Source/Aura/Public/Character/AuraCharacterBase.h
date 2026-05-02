@@ -44,6 +44,8 @@ public:
 	virtual ECharacterClass GetCharacterClass_Implementation() override;
 	virtual FOnASCRegistered& GetOnASCRegisteredDelegate() override;
 	virtual USkeletalMeshComponent* GetWeapon_Implementation() override;
+	virtual void SetIsBeingShocked_Implementation(bool bInShock) override;
+	virtual bool IsBeingShocked_Implementation() const override;
 	/** end Combat Interface战斗接口 结束*/
 	
 	FOnASCRegistered OnAscRegistered;
@@ -58,6 +60,10 @@ public:
 	//当前角色是否处于眩晕状态
 	UPROPERTY(ReplicatedUsing=OnRep_Stunned, BlueprintReadOnly)
 	bool bIsStunned = false;
+
+	//当前角色是否处于眩晕状态
+	UPROPERTY(Replicated, BlueprintReadOnly)
+	bool bIsBeingShocked = false;
 
 	UPROPERTY(ReplicatedUsing=OnRep_Burned, BlueprintReadOnly)
 	bool bIsBurned = false;
@@ -88,8 +94,10 @@ protected:
 
 	bool bDead = false;//当前角色死亡状态
 	
+	//眩晕标签变动后的回调
 	virtual void StunTagChanged(const FGameplayTag CallbackTag, int32 NewCount);
 
+	//当前角色的最大移动速度
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Combat")
 	float BaseWalkSpeed = 600.f;
 
