@@ -302,22 +302,37 @@ void UAuraAttributeSet::HandleIncomingXP(const FEffectProperties& Props)
 		//获取获得经验后的新等级
 		const int32 NewLevel = IPlayerInterface::Execute_FindLevelForXP(Props.SourceCharacter, CurrentXP + LocalIncomingXP);
 		const int32 NumLevelUps = NewLevel - CurrentLevel;//查看等级是否有变化
+		// if (NumLevelUps > 0)
+		// {
+		// 	//如果连升多级，我们通过for循环获取每个等级的奖励
+		// 	for(int32 i = CurrentLevel; i < NewLevel; i++)
+		// 	{
+		// 		//获取升级提供的技能点和属性点
+		// 		const int32 AttributePointsReward = IPlayerInterface::Execute_GetAttributePointsReward(Props.SourceCharacter, CurrentLevel);
+		// 		const int32 SpellPointsReward = IPlayerInterface::Execute_GetSpellPointsReward(Props.SourceCharacter, CurrentLevel);
+		//
+		// 		//增加角色技能点和属性点
+		// 		IPlayerInterface::Execute_AddToAttributePoints(Props.SourceCharacter, AttributePointsReward);
+		// 		IPlayerInterface::Execute_AddToSpellPoints(Props.SourceCharacter, SpellPointsReward);
+		// 	}
+		// 	//提升等级
+		// 	IPlayerInterface::Execute_AddToPlayerLevel(Props.SourceCharacter, NumLevelUps);
+
 		if (NumLevelUps > 0)
 		{
-			//如果连升多级，我们通过for循环获取每个等级的奖励
-			for(int32 i = CurrentLevel; i < NewLevel; i++)
-			{
-				//获取升级提供的技能点和属性点
-				const int32 AttributePointsReward = IPlayerInterface::Execute_GetAttributePointsReward(Props.SourceCharacter, CurrentLevel);
-				const int32 SpellPointsReward = IPlayerInterface::Execute_GetSpellPointsReward(Props.SourceCharacter, CurrentLevel);
-
-				//增加角色技能点和属性点
-				IPlayerInterface::Execute_AddToAttributePoints(Props.SourceCharacter, AttributePointsReward);
-				IPlayerInterface::Execute_AddToSpellPoints(Props.SourceCharacter, SpellPointsReward);
-			}
-			//提升等级
 			IPlayerInterface::Execute_AddToPlayerLevel(Props.SourceCharacter, NumLevelUps);
 
+			int32 AttributePointsReward = 0;
+			int32 SpellPointsReward = 0;
+
+			for (int32 i = 0; i < NumLevelUps; ++i)
+			{
+				SpellPointsReward += IPlayerInterface::Execute_GetSpellPointsReward(Props.SourceCharacter, CurrentLevel + i);
+				AttributePointsReward += IPlayerInterface::Execute_GetAttributePointsReward(Props.SourceCharacter, CurrentLevel + i);
+			}
+			
+			IPlayerInterface::Execute_AddToAttributePoints(Props.SourceCharacter, AttributePointsReward);
+			IPlayerInterface::Execute_AddToSpellPoints(Props.SourceCharacter, SpellPointsReward);
 			bTopOffHealth = true;
 			bTopOffMana = true;
 
