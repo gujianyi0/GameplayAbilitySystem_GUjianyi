@@ -14,6 +14,7 @@ DECLARE_MULTICAST_DELEGATE_ThreeParams(FAbilityStatusChanged, const FGameplayTag
 DECLARE_MULTICAST_DELEGATE_FourParams(FAbilityEquipped, const FGameplayTag& /*技能标签*/, 
 	const FGameplayTag& /*技能状态标签*/, const FGameplayTag& /*输入标签*/, const FGameplayTag& /*上一个输入标签*/);
 DECLARE_MULTICAST_DELEGATE_OneParam(FDeactivatePassiveAbility, const FGameplayTag& /*能力标签*/);
+DECLARE_MULTICAST_DELEGATE_TwoParams(FActivatePassiveEffect, const FGameplayTag& /*能力标签*/, bool /*激活*/);
 /**
  * 
  */
@@ -30,7 +31,8 @@ public:
 	FAbilityStatusChanged AbilityStatusChanged;//技能状态改变的回调委托
 	FAbilityEquipped AbilityEquipped;//技能装配更新回调
 	FDeactivatePassiveAbility DeactivatePassiveAbility;
-
+	FActivatePassiveEffect ActivatePassiveEffect;
+	
 	void AddCharacterAbilities(const TArray<TSubclassOf<UGameplayAbility>>& StartupAbilities);
 	void AddCharacterPassiveAbilities(const TArray<TSubclassOf<UGameplayAbility>>& StartupPassiveAbilities);//应用被动技能
 	bool bStartupAbilitiesGiven = false;//初始化应用技能后，此值将被设置为true，用于记录当前是否被初始化完成
@@ -52,6 +54,14 @@ public:
 	FGameplayAbilitySpec* GetSpecWithSlot(const FGameplayTag& Slot);
 	bool IsPassiveAbility(const FGameplayAbilitySpec& Spec) const;
 	static void AssignSlotToAbility(FGameplayAbilitySpec& Spec, const FGameplayTag& Slot);
+	
+	/**
+	 * 多网络被动特效委托广播，让每个客户端都可以看到特效
+	 * @param AbilityTag 被动技能标签
+	 * @param bActivate 激活或者关闭
+	 */
+	UFUNCTION(NetMulticast, Unreliable)
+	void MulticastActivatePassiveEffect(const FGameplayTag& AbilityTag, bool bActivate);
 	
 	FGameplayAbilitySpec* GetSpecFromAbilityTag(const FGameplayTag& AbilityTag);
 
