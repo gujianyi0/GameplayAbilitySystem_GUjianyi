@@ -33,7 +33,7 @@ public:
 	void ShowDamageNumber(float DamageAmount,ACharacter* TargetCharacter, bool bBlockedHit, bool bCriticalHit);//在每个客户端显示伤害数值
 	
 	UFUNCTION(BlueprintCallable)
-	void ShowMagicCircle();
+	void ShowMagicCircle(UMaterialInterface* DecalMaterial = nullptr);
 
 	UFUNCTION(BlueprintCallable)
 	void HideMagicCircle();
