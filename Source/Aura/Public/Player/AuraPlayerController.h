@@ -16,6 +16,7 @@ class UInputMappingContext;
 class UInputAction;
 struct FInputActionValue;
 class IEnemyInterface;
+class AMagicCircle;
 
 /**
  * 
@@ -30,6 +31,12 @@ public:
 	
 	UFUNCTION(Client, Reliable)
 	void ShowDamageNumber(float DamageAmount,ACharacter* TargetCharacter, bool bBlockedHit, bool bCriticalHit);//在每个客户端显示伤害数值
+	
+	UFUNCTION(BlueprintCallable)
+	void ShowMagicCircle();
+
+	UFUNCTION(BlueprintCallable)
+	void HideMagicCircle();
 protected:
 	virtual void BeginPlay() override;
 	virtual void SetupInputComponent() override;
@@ -89,6 +96,17 @@ private:
 	
 	UPROPERTY(EditDefaultsOnly)
 	TSubclassOf<UDamageTextComponent> DamageTextComponentClass;
+	
+	//创建奥数光圈使用的类
+	UPROPERTY(EditDefaultsOnly)
+	TSubclassOf<AMagicCircle> MagicCircleClass;
+
+	//存储魔法光圈的属性，不需要暴露给蓝图
+	UPROPERTY()
+	TObjectPtr<AMagicCircle> MagicCircle;
+
+	//每一帧调用，更新魔法光圈的位置
+	void UpdateMagicCircleLocation();
 };
 
 
