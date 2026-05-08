@@ -65,6 +65,22 @@ protected:
 	//负面效果持续时间
 	UPROPERTY(EditDefaultsOnly, Category = "Damage")
 	float DebuffDuration = 5.f;
+	
+	//当前伤害类型是否为范围伤害
+	UPROPERTY(EditDefaultsOnly, Category = "Damage")
+	bool bIsRadialDamage = false;
+
+	//内半径：在此半径内的所有目标都将受到完整的伤害
+	UPROPERTY(EditDefaultsOnly, Category = "Damage")
+	float RadialDamageInnerRadius = 0.f;
+
+	//外半径：超过这个距离的目标受到最小伤害，最小伤害如果设置为0，则圈外不受到伤害
+	UPROPERTY(EditDefaultsOnly, Category = "Damage")
+	float RadialDamageOuterRadius = 0.f;
+
+	//伤害源的中心点
+	UPROPERTY(EditDefaultsOnly, Category = "Damage")
+	FVector RadialDamageOrigin = FVector::ZeroVector;
 
 	//从角色设置的蒙太奇数组总，随机一个蒙太奇使用
 	UFUNCTION(BlueprintPure)
