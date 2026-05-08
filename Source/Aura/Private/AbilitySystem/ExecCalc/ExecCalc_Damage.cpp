@@ -9,7 +9,9 @@
 #include "AbilitySystem/AuraAbilitySystemLibrary.h"
 #include "AbilitySystem/AuraAttributeSet.h"
 #include "AbilitySystem/Data/CharacterClassInfo.h"
+#include "Camera/CameraShakeSourceActor.h"
 #include "Interaction/CombatInterface.h"
+#include "Kismet/GameplayStatics.h"
 
 //这里结构体不加F是因为它是内部结构体，不需要外部获取，也不需要在蓝图中使用
 struct AuraDamageStatics
@@ -155,6 +157,7 @@ void UExecCalc_Damage::Execute_Implementation(const FGameplayEffectCustomExecuti
 	
 	//获取挂载此类的GE实例
 	const FGameplayEffectSpec& Spec = ExecutionParams.GetOwningSpec();
+	FGameplayEffectContextHandle EffectContextHandle = Spec.GetContext();
 	
 	//设置评估参数
 	const FGameplayTagContainer* SourceTags = Spec.CapturedSourceTags.GetAggregatedTags();
@@ -185,6 +188,36 @@ void UExecCalc_Damage::Execute_Implementation(const FGameplayEffectCustomExecuti
 		
 		//通过抗性计算出能够对角色造成的伤害值
 		DamageTypeValue *= ( 100.f - Resistance ) / 100.f;
+		
+		if (UAuraAbilitySystemLibrary::IsRadialDamage(EffectContextHandle))
+		{
+			// 1. 覆写 TakeDamage 函数，通过函数获取范围技能能够造成的最终伤害
+			// 2. 创建一个委托 OnDamageDelegate， 在TakeDamage里向外广播最终伤害数值
+			// 3. 在战斗接口声明一个函数用于返回委托，并在角色基类实现，在计算伤害时通过战斗接口获取到委托，并绑定匿名函数
+			// 4. 调用 UGameplayStatics::ApplyRadialDamageWithFalloff 函数应用伤害，函数内会调用角色身上的TakeDamage来广播委托。
+			// 5. 在匿名函数中，修改实际造成的伤害。
+
+			if (ICombatInterface* CombatInterface = Cast<ICombatInterface>(TargetAvatar))
+			{
+				CombatInterface->GetOnDamageSignature().AddLambda([&](float DamageAmount)
+				{
+					DamageTypeValue = DamageAmount;
+				});
+			}
+			UGameplayStatics::ApplyRadialDamageWithFalloff(
+				TargetAvatar,
+				DamageTypeValue,
+				0.f,
+				UAuraAbilitySystemLibrary::GetRadialDamageOrigin(EffectContextHandle),
+				UAuraAbilitySystemLibrary::GetRadialDamageInnerRadius(EffectContextHandle),
+				UAuraAbilitySystemLibrary::GetRadialDamageOuterRadius(EffectContextHandle),
+				1.f,
+				UDamageType::StaticClass(),
+				TArray<AActor*>(),
+				SourceAvatar,
+				nullptr);
+		}
+		
 		//将每种属性伤害值合并进行后续计算
 		Damage += DamageTypeValue;
 	}
@@ -195,8 +228,6 @@ void UExecCalc_Damage::Execute_Implementation(const FGameplayEffectCustomExecuti
 	TargetBlockChance = FMath::Max<float>(TargetBlockChance, 0.f);
 	
 	const bool bBlocked = FMath::RandRange(1, 100) < TargetBlockChance;
-	
-	FGameplayEffectContextHandle EffectContextHandle = Spec.GetContext();
 	
 	UAuraAbilitySystemLibrary::SetIsBlockedHit(EffectContextHandle, bBlocked);
 	
