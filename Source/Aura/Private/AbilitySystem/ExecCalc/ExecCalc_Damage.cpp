@@ -181,6 +181,10 @@ void UExecCalc_Damage::Execute_Implementation(const FGameplayEffectCustomExecuti
 		const FGameplayEffectAttributeCaptureDefinition CaptureDef = TagsToCaptureDefs[ResistanceTag];
 		//通过Tag获取对应伤害类型的值，如果没设置SetByCaller将获取0
 		float DamageTypeValue = Spec.GetSetByCallerMagnitude(DamageTypeTag, false);//原教程此处应误为Pair.Key，应为DamageTypeTag
+		if (DamageTypeValue <= 0.f)
+		{
+			continue;
+		}
 		//获取抗性值
 		float Resistance = 0.f;
 		ExecutionParams.AttemptCalculateCapturedAttributeMagnitude(CaptureDef, EvaluationParameters, Resistance);
