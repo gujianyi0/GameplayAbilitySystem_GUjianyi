@@ -2,6 +2,8 @@
 
 
 #include "AbilitySystem/Abilities/AuraFireBlast.h"
+#include "AbilitySystem/AuraAbilitySystemLibrary.h"
+#include "Actor/AuraFireBall.h"
 
 FString UAuraFireBlast::GetDescription(int32 Level)
 {
@@ -67,5 +69,36 @@ FString UAuraFireBlast::GetNextLevelDescription(int32 Level)
 
 TArray<AAuraFireBall*> UAuraFireBlast::SpawnFireBalls()
 {
-	return TArray<AAuraFireBall*>();
+	TArray<AAuraFireBall*> FireBalls;
+	//获取到角色朝向和位置
+	const FVector Forward = GetAvatarActorFromActorInfo()->GetActorForwardVector();
+	const FVector Location = GetAvatarActorFromActorInfo()->GetActorLocation();
+	//通过函数获取到每个需要生成的火球的旋转
+	TArray<FRotator> Rotators = UAuraAbilitySystemLibrary::EvenlySpacedRotators(Forward, FVector::UpVector, 360.f, NumFireBalls);
+
+	for (const FRotator& Rotator : Rotators)//生成所需的火球数组
+	{
+		//创建变换
+		FTransform SpawnTransform;
+		SpawnTransform.SetLocation(Location);
+		SpawnTransform.SetRotation(Rotator.Quaternion());
+		
+		//创建火球 使用 SpawnActorDeferred 来生成对象时，UE 会延迟实际的对象生成过程，这样你有机会在完全初始化对象之前进行自定义配置。
+		AAuraFireBall* FireBall = GetWorld()->SpawnActorDeferred<AAuraFireBall>(
+			FireBallClass,
+			SpawnTransform,
+			GetOwningActorFromActorInfo(),
+			CurrentActorInfo->PlayerController->GetPawn(),
+			ESpawnActorCollisionHandlingMethod::AlwaysSpawn);
+		
+		//设置火球的伤害配置
+		FireBall->DamageEffectParams = MakeDamageEffectParamsFromClassDefaults();
+
+		FireBalls.Add(FireBall);
+		
+		//在配置完成火球配置后，调用FinishSpawning将火球正式添加到场景中
+		FireBall->FinishSpawning(SpawnTransform);
+	}
+	
+	return FireBalls;
 }
