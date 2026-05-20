@@ -94,6 +94,9 @@ TArray<AAuraFireBall*> UAuraFireBlast::SpawnFireBalls()
 		//设置火球的伤害配置
 		FireBall->DamageEffectParams = MakeDamageEffectParamsFromClassDefaults();
 		FireBall->ReturnToActor = GetAvatarActorFromActorInfo();
+		FireBall->ExplosionDamageParams = MakeDamageEffectParamsFromClassDefaults();
+		FireBall->SetOwner(GetAvatarActorFromActorInfo());
+
 		FireBalls.Add(FireBall);
 		
 		//在配置完成火球配置后，调用FinishSpawning将火球正式添加到场景中
