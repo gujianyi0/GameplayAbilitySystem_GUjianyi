@@ -433,6 +433,14 @@ void FAuraGameplayTags::InitializeNativeGameplayTags()
 		FName("Player.Block.InputReleased"),
 		FString("阻挡键位抬起输入")
 		);
+	/*
+	 * 游戏声音标签
+	 */
+
+	GameplayTags.GameplayCue_FireBlast = UGameplayTagsManager::Get().AddNativeGameplayTag(
+		FName("GameplayCue.FireBlast"),
+		FString("火球声音标签")
+		);
 }
 
 

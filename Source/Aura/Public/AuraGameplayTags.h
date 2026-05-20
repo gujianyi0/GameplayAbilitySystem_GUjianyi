@@ -117,6 +117,8 @@ public:
 	FGameplayTag Player_Block_InputHeld;//阻挡键位悬停输入
 	FGameplayTag Player_Block_InputReleased;//阻挡键位抬起输入
 	FGameplayTag Player_Block_CursorTrace;//阻挡鼠标拾取事件
+	
+	FGameplayTag GameplayCue_FireBlast;
 protected:
 
 private:
