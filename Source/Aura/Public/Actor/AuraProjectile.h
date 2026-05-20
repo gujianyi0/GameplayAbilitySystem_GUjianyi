@@ -32,6 +32,7 @@ public:
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
+	UFUNCTION(BlueprintCallable)
 	void OnHit();
 	virtual  void Destroyed() override;
 	
