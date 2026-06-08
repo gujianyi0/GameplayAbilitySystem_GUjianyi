@@ -24,7 +24,7 @@ public:
 
 	//用户控件实例
 	UPROPERTY(BlueprintReadOnly)
-	TObjectPtr<UUserWidget> LoadScreenWidget;
+	TObjectPtr<ULoadScreenWidget> LoadScreenWidget;
 
 	//MVVM使用的类
 	UPROPERTY(EditDefaultsOnly)

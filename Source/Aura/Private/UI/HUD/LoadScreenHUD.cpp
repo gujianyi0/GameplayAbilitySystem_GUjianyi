@@ -19,7 +19,15 @@ void ALoadScreenHUD::BeginPlay()
 	LoadScreenWidget = CreateWidget<ULoadScreenWidget>(GetWorld(), LoadScreenWidgetClass);
 	LoadScreenWidget->AddToViewport();
 	
+	APlayerController* PC = GetOwningPlayerController();
+	FInputModeUIOnly InputMode;
+	InputMode.SetWidgetToFocus(LoadScreenWidget->TakeWidget());
+	InputMode.SetLockMouseToViewportBehavior(EMouseLockMode::DoNotLock);
+	
+	PC->SetInputMode(InputMode);
+	PC->SetShowMouseCursor(true);
+	
 	//创建完成用户控件后，调用用户控件函数
-	//LoadScreenWidget->BlueprintInitializeWidget();
-
+	LoadScreenWidget->BlueprintInitializeWidget();
+	
 }
