@@ -27,15 +27,19 @@ public:
 	
 	void SetLoadSlotName(FString InLoadSlotName);
 	FString GetLoadSlotName() const { return LoadSlotName; };
-
-	UPROPERTY()
-	FString PlayerName;
 	
-
+	
 	UPROPERTY()
 	FString SlotIndex;
 	
+	/** Field Notifies */
+	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, FieldNotify, Setter, Getter);
+	FString PlayerName;
 
+	void SetPlayerName(FString InPlayerName);
+
+	FString GetPlayerName() const { return PlayerName; }
 private:
 	
 	//用户控件的名称
