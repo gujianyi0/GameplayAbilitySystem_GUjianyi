@@ -8,6 +8,7 @@
 #include "MVVM_LoadSlot.generated.h"
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FSetWidgetSwitcherIndex, int32, WidgetSwitcherIndex);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FEnableSelectSlotButton, bool, bEnable);
 
 /**
  * 
@@ -23,12 +24,15 @@ public:
 	UPROPERTY(BlueprintAssignable)
 	FSetWidgetSwitcherIndex SetWidgetSwitcherIndex;
 	
+	UPROPERTY(BlueprintAssignable)
+	FEnableSelectSlotButton EnableSelectSlotButton;
+	
 	void InitializeSlot();
 	
 	void SetLoadSlotName(FString InLoadSlotName);
 	FString GetLoadSlotName() const { return LoadSlotName; };
 	
-	
+	//当前视图模型的索引，对应存档的索引
 	UPROPERTY()
 	FString SlotIndex;
 	
