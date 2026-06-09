@@ -39,6 +39,7 @@ class AURA_API UMVVM_LoadScreen : public UMVVMViewModelBase
  	UFUNCTION(BlueprintCallable)
  	void SelectSlotButtonPressed(int32 Slot);
  	
+	void LoadData();
  private:
 	
 	//索引和对应MVVM实例的映射

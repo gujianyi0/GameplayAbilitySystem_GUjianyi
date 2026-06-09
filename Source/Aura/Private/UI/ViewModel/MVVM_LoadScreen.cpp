@@ -29,7 +29,7 @@ void UMVVM_LoadScreen::NewSlotButtonPressed(int32 Slot, const FString& EnteredNa
  	AAuraGameModeBase* AuraGameMode = Cast<AAuraGameModeBase>(UGameplayStatics::GetGameMode(this));
  	
  	LoadSlots[Slot]->SetPlayerName(EnteredName);
-
+ 	LoadSlots[Slot]->SlotStatus = Taken;
  	AuraGameMode->SaveSlotData(LoadSlots[Slot], Slot);
  	LoadSlots[Slot]->InitializeSlot();
 }
@@ -42,4 +42,25 @@ void UMVVM_LoadScreen::NewGameButtonPressed(int32 Slot)
 void UMVVM_LoadScreen::SelectSlotButtonPressed(int32 Slot)
 {
 	
+}
+
+void UMVVM_LoadScreen::LoadData()
+{
+ 	//获取到加载存档界面的GameMode
+	AAuraGameModeBase* AuraGameMode = Cast<AAuraGameModeBase>(UGameplayStatics::GetGameMode(this));
+ 	//遍历映射，获取对应存档
+	for (const TTuple<int32, UMVVM_LoadSlot*> LoadSlot : LoadSlots)
+	{
+		ULoadScreenSaveGame* SaveObject = AuraGameMode->GetSaveSlotData(LoadSlot.Value->GetLoadSlotName(), LoadSlot.Key);
+		//获取存档数据
+		const FString PlayerName = SaveObject->PlayerName;
+		TEnumAsByte<ESaveSlotStatus> SaveSlotStatus = SaveObject->SaveSlotStatus;
+		
+		//设置存档视图模型数据
+		LoadSlot.Value->SlotStatus = SaveSlotStatus;
+		LoadSlot.Value->SetPlayerName(PlayerName);
+		
+		//调用视图模型初始化
+		LoadSlot.Value->InitializeSlot();
+	}
 }
