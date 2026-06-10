@@ -6,6 +6,8 @@
 #include "MVVMViewModelBase.h"
 #include "MVVM_LoadScreen.generated.h"
 
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FSlotSelected);
+
 class UMVVM_LoadSlot;
 /**
  * 
@@ -16,9 +18,11 @@ class AURA_API UMVVM_LoadScreen : public UMVVMViewModelBase
 	GENERATED_BODY()
 	
  public:
- 
 	
 	void InitializeLoadSlots();
+	
+	UPROPERTY(BlueprintAssignable)
+	FSlotSelected SlotSelected;
 	
 	//每个存档插槽使用的MVVM类
 	UPROPERTY(EditDefaultsOnly)
@@ -40,6 +44,10 @@ class AURA_API UMVVM_LoadScreen : public UMVVMViewModelBase
  	void SelectSlotButtonPressed(int32 Slot);
  	
 	void LoadData();
+	
+	void SetNumLoadSlots(int32 InNumLoadSlots);
+	
+	int32 GetNumLoadSlots() const {return NumLoadSlots;}
  private:
 	
 	//索引和对应MVVM实例的映射
@@ -55,4 +63,7 @@ class AURA_API UMVVM_LoadScreen : public UMVVMViewModelBase
  
 	UPROPERTY()
 	TObjectPtr<UMVVM_LoadSlot> LoadSlot_2;
+	
+	UPROPERTY(EditAnywhere,BlueprintReadWrite,FieldNotify, Setter, Getter, meta=(AllowPrivateAccess="true"));
+	int32 NumLoadSlots;
   };

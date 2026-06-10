@@ -18,7 +18,6 @@ void ALoadScreenHUD::BeginPlay()
 	//创建用户控件并添加到视口
 	LoadScreenWidget = CreateWidget<ULoadScreenWidget>(GetWorld(), LoadScreenWidgetClass);
 	LoadScreenWidget->AddToViewport();
-	LoadScreenWidget->BlueprintInitializeWidget();
 
 	LoadScreenViewModel->LoadData();
 	
