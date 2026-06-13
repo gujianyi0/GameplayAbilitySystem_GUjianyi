@@ -16,20 +16,21 @@ void ALoadScreenHUD::BeginPlay()
 	LoadScreenViewModel->InitializeLoadSlots();
 
 	//创建用户控件并添加到视口
-	LoadScreenWidget = CreateWidget<ULoadScreenWidget>(GetWorld(), LoadScreenWidgetClass);
-	LoadScreenWidget->AddToViewport();
+	 LoadScreenWidget = CreateWidget<ULoadScreenWidget>(GetWorld(), LoadScreenWidgetClass);
+	 LoadScreenWidget->AddToViewport();
+	
 
-	LoadScreenViewModel->LoadData();
-	
-	APlayerController* PC = GetOwningPlayerController();
-	FInputModeUIOnly InputMode;
-	InputMode.SetWidgetToFocus(LoadScreenWidget->TakeWidget());
-	InputMode.SetLockMouseToViewportBehavior(EMouseLockMode::DoNotLock);
-	
-	PC->SetInputMode(InputMode);
-	PC->SetShowMouseCursor(true);
+	//
+	// APlayerController* PC = GetOwningPlayerController();
+	// FInputModeUIOnly InputMode;
+	// InputMode.SetWidgetToFocus(LoadScreenWidget->TakeWidget());
+	// InputMode.SetLockMouseToViewportBehavior(EMouseLockMode::DoNotLock);
+	//
+	// PC->SetInputMode(InputMode);
+	// PC->SetShowMouseCursor(true);
 	
 	//创建完成用户控件后，调用用户控件函数
 	LoadScreenWidget->BlueprintInitializeWidget();
+	LoadScreenViewModel->LoadData();
 	
 }

@@ -29,8 +29,7 @@ public:
 	
 	void InitializeSlot();
 	
-	void SetLoadSlotName(FString InLoadSlotName);
-	FString GetLoadSlotName() const { return LoadSlotName; };
+
 	
 	//当前视图模型的索引，对应存档的索引
 	UPROPERTY()
@@ -45,8 +44,10 @@ public:
 	FString PlayerName;
 
 	void SetPlayerName(FString InPlayerName);
-
+	void SetLoadSlotName(FString InLoadSlotName);
 	FString GetPlayerName() const { return PlayerName; }
+	FString GetLoadSlotName() const { return LoadSlotName; };
+
 private:
 	
 	//用户控件的名称
