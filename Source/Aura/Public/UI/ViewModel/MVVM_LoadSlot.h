@@ -27,13 +27,13 @@ public:
 	UPROPERTY(BlueprintAssignable)
 	FEnableSelectSlotButton EnableSelectSlotButton;
 	
-	void InitializeSlot();
+	void InitializeSlot(); 
 	
 
 	
 	//当前视图模型的索引，对应存档的索引
 	UPROPERTY()
-	FString SlotIndex;
+	int32 SlotIndex;
 	
 	UPROPERTY()
 	TEnumAsByte<ESaveSlotStatus> SlotStatus;
