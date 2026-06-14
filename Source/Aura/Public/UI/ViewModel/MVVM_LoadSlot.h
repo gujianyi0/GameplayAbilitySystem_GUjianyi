@@ -38,6 +38,10 @@ public:
 	UPROPERTY()
 	TEnumAsByte<ESaveSlotStatus> SlotStatus;
 	
+	//存储玩家关卡出生位置的标签
+	UPROPERTY()
+	FName PlayerStartTag;
+
 	/** Field Notifies */
 	
 
