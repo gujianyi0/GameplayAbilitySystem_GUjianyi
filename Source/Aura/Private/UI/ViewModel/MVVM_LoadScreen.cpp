@@ -82,6 +82,15 @@ void UMVVM_LoadScreen::DeleteButtonPressed()
  	}
 }
 
+void UMVVM_LoadScreen::PlayButtonPressed()
+ {
+ 	AAuraGameModeBase* AuraGameMode = Cast<AAuraGameModeBase>(UGameplayStatics::GetGameMode(this));
+ 	if (IsValid(SelectedSlot))
+ 	{
+ 		AuraGameMode->TravelToMap(SelectedSlot);
+ 	}
+ }
+
 void UMVVM_LoadScreen::LoadData()
 {
  	//获取到加载存档界面的GameMode
