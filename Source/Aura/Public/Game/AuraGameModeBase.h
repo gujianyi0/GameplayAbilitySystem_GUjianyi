@@ -48,6 +48,9 @@ public:
 	UPROPERTY(EditDefaultsOnly)
 	TMap<FString, TSoftObjectPtr<UWorld>> Maps;
 
+	//覆写父类的选择PlayerStart函数，修改为可以通过Tag获取生成位置
+	virtual AActor* ChoosePlayerStart_Implementation(AController* Player) override;
+
 protected:
 	virtual void BeginPlay() override;
 	
