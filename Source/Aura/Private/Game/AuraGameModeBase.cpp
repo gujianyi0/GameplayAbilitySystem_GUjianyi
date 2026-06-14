@@ -2,6 +2,7 @@
 
 
 #include "Game/AuraGameModeBase.h"
+#include "Game/AuraGameInstance.h"
 
 #include "Game/LoadScreenSaveGame.h"
 #include "GameFramework/PlayerStart.h"
@@ -68,6 +69,8 @@ void AAuraGameModeBase::TravelToMap(UMVVM_LoadSlot* Slot)
 
 AActor* AAuraGameModeBase::ChoosePlayerStart_Implementation(AController* Player)
 {
+	
+	UAuraGameInstance* AuraGameInstance = Cast<UAuraGameInstance>(GetGameInstance());
 	//获取关卡里的所有PlayerStart实例
 	TArray<AActor*> Actors;
 	UGameplayStatics::GetAllActorsOfClass(GetWorld(), APlayerStart::StaticClass(), Actors);
@@ -80,7 +83,7 @@ AActor* AAuraGameModeBase::ChoosePlayerStart_Implementation(AController* Player)
 			if (APlayerStart* PlayerStart = Cast<APlayerStart>(Actor))
 			{
 				//判断PlayerStart的Tag设置是否为指定的Tag
-				if (PlayerStart->PlayerStartTag == FName("TheTag"))
+				if (PlayerStart->PlayerStartTag == AuraGameInstance->PlayerStartTag)
 				{
 					SelectedActor = PlayerStart;
 					break;

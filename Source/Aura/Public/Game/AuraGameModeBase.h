@@ -44,6 +44,10 @@ public:
 	UPROPERTY(EditDefaultsOnly)
 	TSoftObjectPtr<UWorld> DefaultMap;
 
+	//角色切换关卡后默认生成位置的PlayerStart的标签
+	UPROPERTY(EditDefaultsOnly)
+	FName DefaultPlayerStartTag;
+	
 	//地图名称和地图的映射
 	UPROPERTY(EditDefaultsOnly)
 	TMap<FString, TSoftObjectPtr<UWorld>> Maps;
