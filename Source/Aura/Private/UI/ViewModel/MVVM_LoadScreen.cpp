@@ -48,16 +48,25 @@ void UMVVM_LoadScreen::NewGameButtonPressed(int32 Slot)
 void UMVVM_LoadScreen::SelectSlotButtonPressed(int32 Slot)
 {
  	SlotSelected.Broadcast();
- 	for (const TTuple<int32, UMVVM_LoadSlot*> LoadSlot : LoadSlots)
+ 	// 使用FTimerHandle确保委托广播在下一帧执行，避免时序问题
+ 	FTimerHandle TimerHandle;
+ 	UWorld* World = GetWorld();
+ 	if (World)
  	{
- 		if (LoadSlot.Key == Slot)
+ 		World->GetTimerManager().SetTimerForNextTick([this, Slot]()
  		{
- 			LoadSlot.Value->EnableSelectSlotButton.Broadcast(false);
- 		}
- 		else
- 		{
- 			LoadSlot.Value->EnableSelectSlotButton.Broadcast(true);
- 		}
+ 			for (const TTuple<int32, UMVVM_LoadSlot*> LoadSlot : LoadSlots)
+ 			{
+ 				if (LoadSlot.Key == Slot)
+ 				{
+ 					LoadSlot.Value->EnableSelectSlotButton.Broadcast(false);
+ 				}
+ 				else
+ 				{
+ 					LoadSlot.Value->EnableSelectSlotButton.Broadcast(true);
+ 				}
+ 			}
+ 		});
  	}
  	SelectedSlot = LoadSlots[Slot];
 }
@@ -91,6 +100,7 @@ void UMVVM_LoadScreen::LoadData()
 		
 		//调用视图模型初始化
 		LoadSlot.Value->InitializeSlot();
+		LoadSlot.Value->SetMapName(SaveObject->MapName);
 	}
 }
 
