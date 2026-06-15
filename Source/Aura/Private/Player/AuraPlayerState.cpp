@@ -43,7 +43,7 @@ void AAuraPlayerState::AddToXP(int32 InXP)
 void AAuraPlayerState::AddToLevel(int32 InLevel)
 {
 	Level += InLevel;
-	OnLevelChangedDelegate.Broadcast(Level);
+	OnLevelChangedDelegate.Broadcast(Level, true);
 }
 
 void AAuraPlayerState::SetXP(int32 InXP)
@@ -55,11 +55,11 @@ void AAuraPlayerState::SetXP(int32 InXP)
 void AAuraPlayerState::SetLevel(int32 InLevel)
 {
 	Level = InLevel;
-	OnLevelChangedDelegate.Broadcast(Level);
+	OnLevelChangedDelegate.Broadcast(Level, false);
 }
 void AAuraPlayerState::OnRep_Level(int32 OldLevel)
 {
-	OnLevelChangedDelegate.Broadcast(Level);//上面修改委托只会在服务器触发，在此处设置是在服务器更新到客户端本地后触发
+	OnLevelChangedDelegate.Broadcast(Level, true);//上面修改委托只会在服务器触发，在此处设置是在服务器更新到客户端本地后触发
 }
 
 void AAuraPlayerState::SetAttributePoints(int32 InPoints)

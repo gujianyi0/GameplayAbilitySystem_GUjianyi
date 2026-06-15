@@ -34,6 +34,7 @@ DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnAttributeChangedSignature, float,
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FMessageWidgetCreatedSignature, FUIWidgetRow, Row);
 
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnLevelChangedSignature, int32, NewLevel, bool, bLevelUp);
 /**
  * 
  */
@@ -64,7 +65,7 @@ public:
 	FOnAttributeChangedSignature OnXPPercentChangedDelegate;//经验条百分比变动回调
 	
 	UPROPERTY(BlueprintAssignable, Category="GAS|Level")
-	FOnPlayerStatChangedSignature OnPlayerLevelChangedDelegate;//等级变动回调
+	FOnLevelChangedSignature OnPlayerLevelChangedDelegate;//等级变动回调
 
 protected:
 
