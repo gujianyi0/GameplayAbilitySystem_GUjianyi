@@ -54,7 +54,7 @@ public:
 	/* 玩家属性 */
 
 	UPROPERTY()
-	int32 PlayerLevel = 0;
+	int32 PlayerLevel = 1;
 
 	//经验值
 	UPROPERTY()

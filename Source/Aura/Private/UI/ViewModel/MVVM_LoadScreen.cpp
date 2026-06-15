@@ -36,6 +36,7 @@ void UMVVM_LoadScreen::NewSlotButtonPressed(int32 Slot, const FString& EnteredNa
  	
  	LoadSlots[Slot]->SetMapName(AuraGameMode->DefaultMapName);
  	LoadSlots[Slot]->SetPlayerName(EnteredName);
+ 	LoadSlots[Slot]->SetPlayerLevel(1);
  	LoadSlots[Slot]->SlotStatus = Taken;
  	LoadSlots[Slot]->PlayerStartTag = AuraGameMode->DefaultPlayerStartTag;
  	AuraGameMode->SaveSlotData(LoadSlots[Slot], Slot);
@@ -114,6 +115,7 @@ void UMVVM_LoadScreen::LoadData()
 		//获取存档数据
 		const FString PlayerName = SaveObject->PlayerName;
 		TEnumAsByte<ESaveSlotStatus> SaveSlotStatus = SaveObject->SaveSlotStatus;
+		LoadSlot.Value->SetPlayerLevel(SaveObject->PlayerLevel);
 		
 		//设置存档视图模型数据
 		LoadSlot.Value->SlotStatus = SaveSlotStatus;
