@@ -47,6 +47,8 @@ public:
 	void SetXP(int32 InXP);//增加经验值
 	void SetLevel(int32 InLevel);//设置当前等级
 	
+	void SetAttributePoints(int32 InPoints);
+	void SetSpellPoints(int32 InPoints);
 protected:
 	
 	UPROPERTY(VisibleAnywhere)
