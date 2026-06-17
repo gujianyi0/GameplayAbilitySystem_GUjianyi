@@ -7,6 +7,7 @@
 #include "GameplayTagContainer.h"
 #include "AuraPlayerController.generated.h"
 
+class IHighlightInterface;
 class UNiagaraSystem;
 class UDamageTextComponent;
 class USplineComponent;
@@ -58,8 +59,8 @@ private:
 	void Move(const FInputActionValue& InputActionValue);
 
 	void CursorTrace();
-	TScriptInterface<IEnemyInterface> LastActor;
-	TScriptInterface<IEnemyInterface> ThisActor;
+	TScriptInterface<IHighlightInterface> LastActor;
+	TScriptInterface<IHighlightInterface> ThisActor;
 	FHitResult CursorHit;
 	//将 TObjectPtr<IEnemyInterface> 替换为 TScriptInterface<IEnemyInterface>，因为：
 	//IEnemyInterface 是一个接口（interface），不是 UObject 的派生类。

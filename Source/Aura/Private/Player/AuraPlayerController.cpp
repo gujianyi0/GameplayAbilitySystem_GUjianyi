@@ -17,6 +17,7 @@
 #include "Input/AuraInputComponent.h"
 #include "Interaction/EnemyInterface.h"
 #include "GameFramework/Character.h"
+#include "Interaction/HighlightInterface.h"
 #include "UI/Widget/DamageTextComponent.h"
 
 AAuraPlayerController::AAuraPlayerController()
@@ -113,7 +114,7 @@ void AAuraPlayerController::CursorTrace()
 	if (!CursorHit.bBlockingHit) return;
 
 	LastActor = ThisActor;
-	ThisActor = TScriptInterface<IEnemyInterface>(CursorHit.GetActor());
+	ThisActor = TScriptInterface<IHighlightInterface>(CursorHit.GetActor());
 	//Cast<IEnemyInterface>(Actor) 返回的是一个 IEnemyInterface* 指针。
 	//但 TScriptInterface<IEnemyInterface> 不能直接接受裸指针赋值。
 
