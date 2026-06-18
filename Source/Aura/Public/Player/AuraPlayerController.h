@@ -19,6 +19,13 @@ struct FInputActionValue;
 class IEnemyInterface;
 class AMagicCircle;
 
+enum class ETargetingStatus : uint8
+{
+	TargetingEnemy,
+	TargetingNonEnemy,
+	NotTargeting
+};
+ 
 /**
  * 
  */
@@ -59,13 +66,20 @@ private:
 	void Move(const FInputActionValue& InputActionValue);
 
 	void CursorTrace();
-	TScriptInterface<IHighlightInterface> LastActor;
-	TScriptInterface<IHighlightInterface> ThisActor;
+	//ScriptInterface<IHighlightInterface> LastActor;
+	//TScriptInterface<IHighlightInterface> ThisActor;
+	UPROPERTY()
+	TObjectPtr<AActor> LastActor;
+	UPROPERTY()
+	TObjectPtr<AActor> ThisActor;
 	FHitResult CursorHit;
 	//将 TObjectPtr<IEnemyInterface> 替换为 TScriptInterface<IEnemyInterface>，因为：
 	//IEnemyInterface 是一个接口（interface），不是 UObject 的派生类。
 	//对于接口类型的引用，Unreal 推荐使用 TScriptInterface<YourInterfaceType>。
 
+	static void HighlightActor(AActor* InActor);
+	static void UnHighlightActor(AActor* InActor);
+	
 	void AbilityInputTagPressed(FGameplayTag InputTag);
 	void AbilityInputTagReleased(FGameplayTag InputTag);
 	void AbilityInputTagHeld(FGameplayTag InputTag);
@@ -82,7 +96,7 @@ private:
 	float FollowTime = 0.f;
 	float ShortThreshold = 0.5f;
 	bool bAutoRunning = false;
-	bool bTargeting = false;
+	ETargetingStatus TargetingStatus = ETargetingStatus::NotTargeting;
 
 	UPROPERTY(EditDefaultsOnly)
 	float AutoRunAcceptanceRadius = 50.f;

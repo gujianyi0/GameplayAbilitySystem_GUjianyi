@@ -25,8 +25,9 @@ public:
 
 
 	// Highlight Interface
-	virtual void HighlightActor() override;//高亮
-	virtual void UnHighlightActor() override;//取消高亮
+	virtual void HighlightActor_Implementation() override;//高亮
+	
+	virtual void UnHighlightActor_Implementation() override;//取消高亮
 	// end Highlight Interface
 
 	/** Combat Interface */
