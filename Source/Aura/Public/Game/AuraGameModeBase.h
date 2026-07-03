@@ -33,7 +33,7 @@ public:
 	ULoadScreenSaveGame* RetrieveInGameSaveData();
 	void SaveInGameProgressData(ULoadScreenSaveGame* SaveObject);
 	
-	void SaveWorldState(UWorld* World) const;
+	void SaveWorldState(UWorld* World, const FString& DestinationMapAssetName = FString("")) const;
 	void LoadWorldState(UWorld* World) const;
 	
 	void TravelToMap(UMVVM_LoadSlot* Slot);
@@ -57,6 +57,8 @@ public:
 	UPROPERTY(EditDefaultsOnly)
 	TMap<FString, TSoftObjectPtr<UWorld>> Maps;
 
+	FString GetMapNameFromMapAssetName(const FString& MapAssetName) const;
+	
 	//覆写父类的选择PlayerStart函数，修改为可以通过Tag获取生成位置
 	virtual AActor* ChoosePlayerStart_Implementation(AController* Player) override;
 
