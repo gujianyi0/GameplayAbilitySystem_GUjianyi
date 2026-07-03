@@ -54,6 +54,8 @@ public:
 	
 	UPROPERTY(EditAnywhere,BlueprintReadOnly, Category = "Combat")
 	float LifeSpan = 5.f;
+	
+	void SetLevel(int32 InLevel) { Level = InLevel; }
 	//设置死亡后的存在时间
 	
 protected:
