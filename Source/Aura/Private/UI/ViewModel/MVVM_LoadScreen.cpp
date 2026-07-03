@@ -34,6 +34,12 @@ void UMVVM_LoadScreen::NewSlotButtonPressed(int32 Slot, const FString& EnteredNa
 {
  	AAuraGameModeBase* AuraGameMode = Cast<AAuraGameModeBase>(UGameplayStatics::GetGameMode(this));
  	
+ 	if (!IsValid(AuraGameMode))
+ 	{
+ 		GEngine->AddOnScreenDebugMessage(1, 15.f, FColor::Magenta, FString("Please switch to Single Player"));
+ 		return;
+ 	}
+ 	
  	LoadSlots[Slot]->SetMapName(AuraGameMode->DefaultMapName);
  	LoadSlots[Slot]->SetPlayerName(EnteredName);
  	LoadSlots[Slot]->SetPlayerLevel(1);
@@ -108,6 +114,9 @@ void UMVVM_LoadScreen::LoadData()
 {
  	//获取到加载存档界面的GameMode
 	AAuraGameModeBase* AuraGameMode = Cast<AAuraGameModeBase>(UGameplayStatics::GetGameMode(this));
+ 	
+ 	if (!IsValid(AuraGameMode)) return;
+ 	
  	//遍历映射，获取对应存档
 	for (const TTuple<int32, UMVVM_LoadSlot*> LoadSlot : LoadSlots)
 	{
